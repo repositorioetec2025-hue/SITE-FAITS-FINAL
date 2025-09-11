@@ -32,7 +32,7 @@ const termosDeBusca = {
         'guia', 'manual', 'apresentação', 'contexto', 'declaração', 'valores', 'metodologia',
         'consiste', 'descrição', 'o porquê', 'justificativa', 'sobre a iniciativa', 'premissa',
         'briefing', 'o porquê do projeto', 'nosso manifesto', 'entenda a ideia', 'base do projeto',
-        'sumário executivo', 'concepção', 'sobre a ferramenta', 'nossa filosofia'
+        'sumário executivo', 'concepção', 'sobre a ferramenta', 'nossa filosofia','sobre o que se trata','sobre o que se trata o projeto'
     ],
     'desenvolvedores.html': [
         'desenvolvedores', 'devs', 'quem fez', 'criadores', 'time',
