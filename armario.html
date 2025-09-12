@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu primeiro site</title>
+    <title>Site Faits</title>
     <link rel="stylesheet" href="./css/style.css">  
 </head>
 
 <body>
-    <header class="cabeçalho">
+  <header class="cabeçalho">
 
     <div class="container" title="Menu de Navegação">
         <input type="checkbox" id="menu" class="container__botao"/>
@@ -22,7 +22,7 @@
                 <a href="index.html" class="botao_inicio"> Início </a>
             </li>
             <li class="lista-menu__item">
-                <a href="armario.html" class="botao_armario"> Armário </a>
+                <a href="armario.html" class="botao_armario"> Repositório </a>
             </li>
             <li class="lista-menu__item">
                 <a href="sobre-projeto.html" class="botao_projeto"> Projeto </a>
@@ -56,19 +56,18 @@
             </li>
                  <li class="lista-menu__item">
                 <a href="config.html" class="botao_config">
-                    Configurações
+                    Meus Repositórios
                 </a>
             </li>
           </ul>
     </div>
 
 </header>
-
     <main class="teste_conteudo">
 
         <h1 class="teste_conteudo__conteudo__titulo">
             <strong>
-                <b class="negrito1">Portfólio</b>
+                <b class="negrito1">Repositórios</b>
             </strong>
          </h1>
 
@@ -82,18 +81,38 @@
         </div>
 </main>
 
-    <footer class="rodape">
-      <h2 class="apresentacao__links__subtitulo">Acesse nossas redes:</h2>
-      <div class="apresentacao__links">
-        <a class="apresentacao__links__link" href="link-redes.html"   title="Links das redes">
-          <img src="./assets/github.png" />
 
-          <img src="./assets/linkedin.png" />
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="sobre-projeto.html">Sobre o Projeto</a></li>
+                    <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+                </ul>
+            </div>
 
-          <img src="./assets/instagram.png" />
-        </a>
-      </div>
+            <div class="footer-section">
+                <h4>O Projeto</h4>
+                <p>Este site é o resultado prático para a disciplina "Extensão e Dinâmicas de Aprendizagem: Sociedade do Futuro".</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Instituição</h4>
+                <p>
+                    Universidade São Francisco <br>
+                    ETEC
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 FAITS | Todos os direitos reservados | All rights reserved.</p>
+        </div>
     </footer>
+        <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+
     <script src="./js/frontend/pesquisa.js"></script>
 </body>
 

@@ -7,11 +7,11 @@
 :root {
   /* Cores padronizadas com base no logo da Etec */
   --cor-cabeçalho: #2B303A;      /* Cinza escuro do texto "Etec" */
-  --cor-fundo: #f4f4f4;          /* Mesmo cinza escuro para um visual coeso */
-  --cor-primaria: #000000;        /* Branco para o texto principal, garantindo legibilidade */
+  --cor-fundo: #f4f4f4;          /* Fundo claro para o corpo */
+  --cor-primaria: #000000;       /* Preto para o texto principal */
   --cor-destaque: #D32027;       /* Vermelho institucional do logo */
   --cor-botao: #D32027;          /* Vermelho para botões de ação */
-  --cor-dev-nome: #000000;      /* Cinza mais claro, inspirado no texto secundário do logo */
+  --cor-dev-nome: #000000;       /* Cor para nome de desenvolvedor */
   
   /* Fontes e tamanhos mantidos do código original */
   --fonte-titulo: "Krona One", sans-serif;
@@ -19,7 +19,7 @@
   --tamanho-texto: clamp(1rem, 4vw, 1.5rem);
   --tamanho-link: clamp(0.2rem, 4vw, 1.25rem);
   --tamanho-subtitulo: clamp(1.35rem, 4vw, 1.75rem);
-  --tamnho-titulo:clamp(1.75rem, 4vw, 2.20rem)
+  --tamnho-titulo:clamp(1.75rem, 4vw, 2.20rem);
   --espaco-sm: 0.5rem;
   --espaco-md: 1rem;
   --espaco-lg: 1.5rem;
@@ -33,12 +33,19 @@ body {
   background-color: var(--cor-fundo);
   color: var(--cor-primaria);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .Body_config {
   background-color: var(--cor-cabeçalho);
   color: var(--cor-primaria);
   min-height: 100vh;
+}
+
+
+main {
+    flex-grow: 1;
 }
 
 /* ==========================================================================
@@ -98,8 +105,8 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-    padding: 0; /* Remove o padding antigo */
-    margin: 1rem;  /* Remove a margem antiga */
+    padding: 0;
+    margin: 1rem;
 }
 
 .cabeçalho__menu-hamburguer {
@@ -127,8 +134,9 @@ body {
     border: solid 2px var(--cor-primaria);
     display: none;
       position: absolute;
-      top: 100%
-      
+      top: 100%;
+      z-index: 10;
+      background-color: var(--cor-fundo);
 }
 
 .container__botao:checked~.lista-menu {
@@ -138,8 +146,6 @@ body {
 .lista-menu__titulo, .lista-menu__item {
   padding: 1rem;
   font-family: var(--fonte-texto);
-  background-color: var(--cor-fundo);
-  color: var(--cor-fundo);
 }
 
 .lista-menu__titulo { 
@@ -147,6 +153,18 @@ body {
   font-size: var(--tamanho-link);
   font-weight: 500;
 }
+
+.lista-menu__item a {
+    color: var(--cor-primaria); 
+    text-decoration: none;
+}
+
+.lista-menu__item a:hover,
+.lista-menu__item a:focus,
+.lista-menu__item a:active {
+    color: var(--cor-destaque);
+    text-decoration: none; 
+  }
 
 .container__botao {
   opacity: 0; 
@@ -157,7 +175,6 @@ body {
 }
 
 /* pesquisa do usario*/
-
 .form-pesquisa {
     display: flex;
     align-items: center;
@@ -188,7 +205,7 @@ body {
 
 .botao-pesquisa {
     border: none;
-    border-radius: 50%;
+    border-radius: 60%;
     background: var(--cor-primaria);
     padding: 2%;
     margin-right: 2%;
@@ -197,15 +214,15 @@ body {
     color: var(--cor-primaria); 
 }
 
+.botao-pesquisa.manual-btn:hover {
+  transform: scale(1.10);
+}
 
 .form-pesquisa:focus-within {
     border-color: var(--cor-destaque);
     box-shadow: 0 0 5px rgba(211, 32, 39, 0.5); /* Cor RGB de #D32027 */
 }
-
 /*configuraçoes do usuario*/
-
-/* Estilo específico para as configurações */
 .cabeçalho__menu__config {
     background-image: url("../assets/engrenagens.jpg");
     background-size: cover;
@@ -235,12 +252,11 @@ body {
     display: none;
     position: absolute;
     top: 100%;
-    right: 0; /* Alinha na borda direita */
+    right: 0;
     z-index: 10;
     padding: 1rem;
     font-family: var(--fonte-texto);
     background-color: var(--cor-fundo);
-    color: var(--cor-fundo);
     list-style-type: none;
 }
 
@@ -252,7 +268,8 @@ body {
     text-align: center;
 }
 
-  /*======================================================
+
+/*======================================================
    Parte exclusiva Config.html
    ========================================================================== */
 .cabeçalho_config {
@@ -265,13 +282,13 @@ body {
 }
 
 .Botao_setinha {
-  display: block; /* Ou 'inline-block'. Isso permite que a tag <a> tenha altura e largura. */
+  display: block;
   background-image: url("../assets/setinha.jpg"); 
   width: 24px;
   height: 24px;
-  background-size: contain;   /* Apenas um é necessário */
-  background-repeat: no-repeat; /* Evita que a imagem se repita */
-  background-position: center;  /* Centraliza a imagem no elemento */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   border-radius: 50%;
   padding: 1.5rem;
   margin: 1rem;
@@ -281,7 +298,7 @@ body {
   transform: scale(1.10);
 }
 
-  /*======================================================
+/*======================================================
    4. CONTEÚDO PRINCIPAL (MAIN)
    ========================================================================== */
 
@@ -320,12 +337,9 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   width: 100%;
-  min-height: 400px; /* Garante a altura mínima para aparecer */
+  min-height: 400px;
 }
 
-/* ===========================================================
-   PARTE EXCLUSIVA DO ARQUIVO Desenvolvedores_index.html
-   =============================================================*/
 .slider {
   margin-top: 100%;
   width: 95vw; 
@@ -336,7 +350,6 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-
 .slides {
   margin-top: 2%;
   width: 300%;
@@ -344,11 +357,9 @@ body {
   display: flex;
   transition: margin-left 0.6s ease-in-out;
 }
-
 .slides input {
   display: none;
 }
-
 .slide {
   width: 33.333%;
   height: 100%; 
@@ -358,15 +369,13 @@ body {
   align-items: center;
   gap: 0.5rem; 
 }
-
 .slide-img {
   width: 300px;
   height: 300px;
   object-fit: cover;
   border: 4px solid var(--cor-cabeçalho);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3); /* Sombra na imagem */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
-
 .manual-navigation, .navigation-auto {
   position: absolute;
   width: 100%;
@@ -375,9 +384,8 @@ body {
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  z-index: 10; /* Garante que fique na frente de tudo */
+  z-index: 10;
 }
-
 .manual-btn {
   border: 2px solid white;
   padding: 8px;
@@ -385,26 +393,20 @@ body {
   cursor: pointer;
   transition: 0.5s;
 }
-
 .manual-btn:not(:last-child) {
   margin-right: 30px;
 }
-
 .manual-btn:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
-
 .navigation-auto div {
   border: 2px solid rgba(255, 255, 255, 0.5);
   padding: 8px;
   border-radius: 50%;
 }
-
 .navigation-auto div:not(:last-child) {
     margin-right: 30px;
 }
-
-/* Regras de destaque e movimento */
 #radio1:checked ~ .first { margin-left: 0; }
 #radio2:checked ~ .first { margin-left: -33.333%; }
 #radio3:checked ~ .first { margin-left: -66.666%; }
@@ -414,12 +416,7 @@ body {
 #radio3:checked ~ .navigation-auto .auto-btn3 {
     background-color: white;
 }
-
-/* ===========================================================
-   PARTE EXCLUSIVA DO ARQUIVO Sobre_projeto.html
-   =============================================================*/
-
-  .Projeto_conteudo {
+.Projeto_conteudo {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -428,105 +425,95 @@ body {
     gap: 2.5rem;
     margin-top: var(--espaco-xl);
   }
-
-  .Projeto_conteudo_subtitulo {
+.Projeto_conteudo_subtitulo {
     font-family: var(--fonte-titulo);
     font-weight: 400;
     font-size: var(--tamanho-subtitulo);
     color: var(--cor-dev-nome);
     margin: 1rem;
   }
-
-  .Projeto_conteudo_paragrafo {
+.Projeto_conteudo_paragrafo {
     font-family: var(--fonte-texto);
     font-size: var(--tamanho-texto);
   }
-
-  /* ===========================================================
-   PARTE EXCLUSIVA DO ARQUIVO config.html
-   =============================================================*/
 .Configurações {
   background-color: var(--cor-cabeçalho);
   width: 100%;
 }
-    
-
+   
 /* ==========================================================================
-   5. SEÇÃO DE LINKS (REDES SOCIAIS) 
+   5. RODAPÉ (FOOTER) - ATUALIZADO COM ABORDAGEM MOBILE-FIRST
    ========================================================================== */
-  .redes-card {
+
+.site-footer {
+    margin-top: 8%;
+    background-color: var(--cor-cabeçalho);
+    color: #f4f4f4;
+    padding: 40px 20px; /* Espaçamento controlado e ideal para mobile */
+    font-family: var(--fonte-texto);
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: center; /* Centraliza o texto das seções no mobile */
+}
+
+.footer-container {
+    max-width: 1170px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
-    flex-direction:column-reverse;
-    gap: 1rem;
-  }
-
-    .imagem-rede {
-    width: 80px;
-    height: 80px;
-    margin-right: 2px;
-    object-fit: cover;
-    gap: 1rem;
-    padding: 1rem;
+    flex-wrap: wrap; 
+    justify-content: center; 
 }
 
-  .texto-rede {
-    text-align: center;
-    padding-top: 10rem;
-  }
+.footer-section {
+    width: 100%; 
+    margin-bottom: 35px; 
+}
 
-  .nome-rede {
-    color: var(--cor-dev-nome);
+
+.footer-section:last-of-type {
+    margin-bottom: 0;
+}
+
+.footer-section h4 {
+    color: var(--cor-destaque);
     font-family: var(--fonte-titulo);
-    font-size: var(--tamanho-subtitulo);
-  }
-
-/* ==========================================================================
-   6. RODAPÉ (FOOTER)
-   ========================================================================== */
-
-.rodape {
-  padding: var(--espaco-lg);
-  color: var(--cor-primaria);
-  background-color: var(--cor-fundo);
-  text-align: center;
-  font-family: var(--fonte-texto);
-  margin-top: 6rem;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-transform: uppercase;
 }
 
-.rodape_config {
-   padding: var(--espaco-lg);
-  background-color: var(--cor-cabeçalho);
-  text-align: center;
-  font-family: var(--fonte-texto);
-  margin-top: 6rem;
+.footer-section p, .footer-section a {
+    color: #bdc3c7;
+    text-decoration: none;
 }
 
-.apresentacao__links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--espaco-xl);
-  padding: var(--espaco-xl) var(--espaco-md);
+.footer-section ul {
+    padding-left: 0;
+    list-style: none;
 }
 
-.apresentacao__links__link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 200px;
-  padding: 0.75rem 0;
-  border-radius: 1.5rem;
-  background-color: var(--cor-fundo);
-  color: var(--cor-fundo);
-  text-decoration: none;
-  font-family: var(--fonte-titulo);
-  font-size: 1rem;
-  font-weight: 400;
-  transition: transform 0.3s ease;
+.footer-section ul a:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }
 
-.apresentacao__links__link:hover { transform: scale(1.08); }
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 30px;
+    border-top: 1px solid #3e4750;
+}
+
+.footer-bottom p {
+    color: #737373;
+    font-size: 14px;
+}
+
+
+
+
 
 /* ==========================================================================
    7. MEDIA QUERIES 
@@ -534,130 +521,95 @@ body {
 
 @media (min-width: 769px) {
 
-  /* ==========================================================================
-  Titulos
-   ========================================================================== */
 
-.teste_conteudo__conteudo__titulo,
-.Projeto_titulo,
-.titulo_desenvolvedores,
-.Configurações_titulo {
-  font-size: 2.20rem;
+    .teste_conteudo__conteudo__titulo,
+    .Projeto_titulo,
+    .titulo_desenvolvedores,
+    .Configurações_titulo {
+      font-size: 2.20rem;
+    }
+    .form-pesquisa {
+        margin-left: 18rem;
+        margin-right: 40rem;
+    }
+    .input-pesquisa {
+        font-size: 1.1rem;
+    }
+    .form-pesquisa {
+        padding: 0.01rem;
+    }
+    .cabeçalho__menu__config {
+        margin-right: 3rem;
+    }
+    .conteudo_principal_wrapper { 
+      flex-direction: row;
+      margin-left: 0;
+      padding-left: 0;
+      gap: var(--espaco-lg);
+    }
+    .teste_conteudo__conteudo {
+      width: 50%;
+      text-align: left;
+    }
+    .logo_Site {
+      width: 60%;
+      min-height: 750px;
+      background-size: auto 100%;
+      background-position: right left; 
+      padding-right: 10px;
+      mask-image: linear-gradient(to left, black 20%, transparent 90%);
+      -webkit-mask-image: linear-gradient(to left, black 20%, transparent 90%);
+    }
+    .desenvolvedor-card { flex-direction: row; text-align: left; }
+    .imagem-desenvolvedor { width: 300px; height: 300px; }
+    .Projeto_conteudo {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-top: var(--espaco-xl);
+      margin-left: var(--espaco-xl);
+    }
+    .slider {
+      height: 86vh;
+      margin: 2rem auto;
+      width: 94vw;
+    }
+    .slide {
+      gap: 1.5rem;
+    }
+    .slide-img {
+      width: 40%;
+      height: 100%;
+    }
+
+    /* Nova regra para o rodapé em telas maiores */
+    .footer-section {
+        width: 30%; 
+        margin-bottom: 0;
+    }
 }
 
-/* ==========================================================================
-   . CABEÇALHO (HEADER) 
-   ========================================================================== */
-/* pesquisa do usario*/
-.form-pesquisa {
-    margin-left: 18rem;
-    margin-right: 40rem;
-}
+    .site-footer {
+        text-align: left;
+        padding: 45px 0 20px;
+        padding: 4% 5% 2%;
+     }
 
-.input-pesquisa {
-    font-size: 1.1rem;
-}
+    .footer-container {
+        justify-content: space-between; /* Distribui as colunas no desktop */
+    }
 
-.form-pesquisa {
-    padding: 0.01rem;
-}
-
-.cabeçalho__menu__config {
-    margin-right: 3rem;
-}
-
-/*. CONTEÚDO PRINCIPAL (MAIN)*/
-  
-  .conteudo_principal_wrapper { 
-    flex-direction: row;
-    margin-left: 0;
-    padding-left: 0;
-    gap: var(--espaco-lg);
-  }
-
-  .teste_conteudo__conteudo {
-    width: 50%;
-    text-align: left;
-  }
-
-  .logo_Site {
-    width: 60%;
-    min-height: 750px;
-    background-size: auto 100%;
-    background-position: right left; 
-    padding-right: 10px;
-    mask-image: linear-gradient(to left, black 20%, transparent 90%);
-    -webkit-mask-image: linear-gradient(to left, black 20%, transparent 90%);
-  }
-  .apresentacao__links { padding: 4rem 2rem; }
-
-   .rodape { margin-top: 12rem; }
-
-  /* PARTE EXCLUSIVA DO ARQUIVO Desenvolvedores_index.html*/
-
-  .desenvolvedor-card { flex-direction: row; text-align: left; }
-
-  .imagem-desenvolvedor { width: 300px; height: 300px; }
-
-  /*PARTE EXCLUSIVA DO ARQUIVO Sobre_projeto.html*/
-
-  .Projeto_conteudo {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: space-between;
-    gap: 1.5rem;
-    margin-top: var(--espaco-xl);
-    margin-left: var(--espaco-xl);
-  }
-/* PARTE EXCLUSIVA DE DESENVOLVEDORES*/
-.slider {
-  height: 86vh;
-  margin: 2rem auto;
-  width: 94vw;
-}
-
-.slide {
-  gap: 1.5rem;
-}
-
-.slide-img {
-  width: 40%;
-  height: 100%;
-}
-
-}
-
-/*Parde da area de links*/
-  .redes-card { gap: 0;}
-
-  .imagem-rede {
-    width: 400px;
-    height: 400px;
-    margin-right: 8px;
-    border: 50px ;
-    gap: 2rem;
-    padding: 2rem;
-}
-  .imagem-rede:hover {
-    transform: scale(1.10);
-}
-
-  .texto-rede {
-    padding-top: 2rem;
-  }
+    .footer-section {
+        width: 30%; 
+        margin-bottom: 0; 
+    }
 
 @media (min-width: 1024px) {
   .teste_conteudo { padding: 0 5% }
-
-   .conteudo_principal_wrapper { 
-    gap: var(--espaco-lg);
-  }
-
-  .apresentacao__links {
-    flex-direction: row;
-    justify-content: center;
-    gap: 1rem;
+    .conteudo_principal_wrapper { 
+      gap: var(--espaco-lg);
   }
 }

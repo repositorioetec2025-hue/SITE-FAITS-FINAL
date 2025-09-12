@@ -1,95 +1,100 @@
 const formPesquisa = document.getElementById('formPesquisa');
 const inputPesquisa = formPesquisa.querySelector('.input-pesquisa');
 
-const termosDeBusca = {
-    'index.html': [
-        'inicio', 'início', 'home', 'pagina inicial', 'página inicial', 'aba inicio', 'botão inicio',
-        'principal', 'tela inicial', 'menu principal', 'começo', 'voltar', 'painel', 'dashboard',
-        'capa', 'voltar ao inicio', 'ir para home', 'recomeçar', 'começar', 'ir para o começo',
-        'retornar', 'página principal', 'portal', 'entrada', 'home page', 'vista geral', 'resumo',
-        'central', 'ponto de partida', 'reiniciar', 'guia principal', 'acesso rápido', 'área de trabalho',
-        'plataforma', 'primeira página', 'front page', 'tela de boas-vindas', 'menu inicial', 'recomeço',
-        'navegação', 'sumário', 'painel principal', 'página de aterrissagem', 'tela principal', 'desktop',
-        'ponto central', 'hub', 'índice', 'menu de navegação', 'voltar ao começo', 'raiz', 'ambiente inicial'
-    ],
-    'armario.html': [
-        'armario', 'armário', 'meu armario', 'meu armário', 'guardaroupa',
-        'roupas', 'minhas roupas', 'looks', 'meus looks', 'vestuário', 'peças', 'minhas peças',
-        'combinações', 'closet', 'meu closet', 'guarda-roupa', 'ver armário', 'abrir armário',
-        'organizar looks', 'ver looks', 'vestimenta', 'trajes', 'indumentária', 'figurinos',
-        'acervo', 'coleção', 'provador', 'estilos', 'conjuntos', 'guarda-vestidos', 'roupagem',
-        'itens', 'visualizador', 'organizador', 'roupeiro', 'inventário', 'meu acervo', 'ver peças',
-        'minhas combinações', 'catálogo de roupas', 'malas', 'baú de roupas', 'gabinete', 'acervo de moda',
-        'guia de estilo', 'montar look', 'consultor de imagem', 'peças do vestuário', 'meu cabide',
-        'organizador de armário'
-    ],
-    'sobre-projeto.html': [
-        'projeto', 'sobre', 'sobre o projeto', 'informações', 'info',
-        'detalhes', 'explicação', 'o que é', 'como funciona', 'objetivo', 'finalidade', 'escopo',
-        'missão', 'visão', 'documentação', 'sobre nós', 'a respeito do projeto',
-        'detalhes do projeto', 'qual o objetivo', 'para que serve', 'objetivo do projeto', 'propósito',
-        'conceito', 'fundamentos', 'iniciativa', 'proposta', 'o que fazemos', 'como surgiu', 'história',
-        'guia', 'manual', 'apresentação', 'contexto', 'declaração', 'valores', 'metodologia',
-        'consiste', 'descrição', 'o porquê', 'justificativa', 'sobre a iniciativa', 'premissa',
-        'briefing', 'o porquê do projeto', 'nosso manifesto', 'entenda a ideia', 'base do projeto',
-        'sumário executivo', 'concepção', 'sobre a ferramenta', 'nossa filosofia','sobre o que se trata','sobre o que se trata o projeto'
-    ],
-    'desenvolvedores.html': [
-        'desenvolvedores', 'devs', 'quem fez', 'criadores', 'time',
-        'equipe', 'créditos', 'autores', 'programadores', 'quem desenvolveu', 'equipe de desenvolvimento',
-        'o time', 'membros', 'realizadores', 'nossa equipe', 'falar com os devs', 'contatar a equipe',
-        'engenheiros de software', 'os responsáveis', 'ficha técnica', 'responsáveis', 'construtores',
-        'idealizadores', 'colaboradores', 'participantes', 'staff', 'a equipe por trás', 'mentes por trás',
-        'quem somos', 'o squad', 'grupo', 'contribuidores', 'produtores', 'autoria', 'expediente',
-        'quem produziu', 'realização', 'equipe técnica', 'cérebros', 'nosso time', 'os criadores',
-        'mentes criativas', 'engenheiros', 'a turma', 'quem está por trás', 'contato da equipe',
-        'desenvolvimento', 'a companhia', 'os arquitetos', 'painel de créditos', 'equipe de criação'
-    ],
-    'config.html': [
-        'configurações', 'configuracoes', 'config', 'perfil', 'ajustes', 'opções',
-        'minha conta', 'meu perfil', 'preferências', 'personalizar', 'painel de controle', 'ajustar',
-        'dados da conta', 'minhas informações', 'editar perfil', 'mudar senha', 'alterar dados',
-        'segurança', 'privacidade', 'notificações', 'definições', 'meus dados', 'gerenciar',
-        'customizar', 'painel do usuário', 'opções da conta', 'modificar', 'informações pessoais',
-        'dados de login', 'gerenciamento', 'parâmetros', 'regulagens', 'central de controle',
-        'meu espaço', 'customização', 'ferramentas', 'setup', 'ajustes gerais', 'minha área',
-        'definir', 'preferências do sistema', 'gerenciar perfil', 'central de privacidade', 'meu login',
-        'opções de usuário', 'gestão de conta', 'customizar interface', 'ajustes de conta',
-        'minhas definições', 'painel de preferências', 'área do usuário'
-    ],
-    'redes.html': [
-        'redes sociais', 'social', 'instagram', 'facebook', 'contato',
-        'linkedin', 'twitter', 'x', 'youtube', 'tiktok', 'github', 'nos siga', 'mídias sociais',
-        'comunidade', 'nossas redes', 'links sociais', 'acompanhe a gente', 'conectar',
-        'fale conosco', 'mandar mensagem', 'interaja', 'nossos canais', 'canais de comunicação',
-        'siga-nos', 'perfis sociais', 'onde nos encontrar', 'junte-se', 'nossas mídias',
-        'plataformas digitais', 'comunicação social', 'interação social', 'engajamento online',
-        'nos encontre', 'seguir online', 'suporte ao cliente', 'nossos perfis', 'contatos digitais',
-        'social media', 'seguir a gente', 'entre em contato', 'enviar e-mail', 'mensagem direta',
-        'nossos links', 'participe', 'nossos grupos', 'fóruns', 'central de ajuda', 'atendimento',
-        'interagir', 'faça contato'
-    ]
-};
 
-function buscarPagina(termo) {
-    const termoFormatado = termo.trim().toLowerCase();
-    let destinoEncontrado = null;
+let fuse;
+let listaDeBuscaPlana;
 
-    for (const url in termosDeBusca) {
-        if (termosDeBusca[url].includes(termoFormatado)) {
-            destinoEncontrado = url;
-            break;
-        }
-    }
+// --- PASSO 1: Carregar os dados e o índice pré-gerado ---
+async function inicializarBusca() {
+    try {
+        // Carrega a lista de termos e o índice ao mesmo tempo
+        const [respostaLista, respostaIndice] = await Promise.all([
+            fetch('./assets/lista-busca.json'),
+            fetch('./assets/indice-busca.json')
+        ]);
 
-    if (destinoEncontrado) {
-        window.location.href = destinoEncontrado;
-    } else {
-        alert("Não encontramos resultados para: " + termo);
+        
+        listaDeBuscaPlana = await respostaLista.json();
+        const indiceFuse = await respostaIndice.json();
+        
+        // --- PASSO 2: Inicializar o Fuse.js com os dados carregados ---
+        const options = {
+            keys: ['termo'],
+            includeScore: true,
+            threshold: 0.7, // qual a rigorozidade da busca de termos
+            // IMPORTANTE: Passa o índice pré-gerado para o Fuse
+            index: Fuse.parseIndex(indiceFuse) 
+        };
+
+        // Cria a instância do Fuse. Agora isso é quase instantâneo!
+        fuse = new Fuse(listaDeBuscaPlana, options);
+        console.log("Sistema de busca inteligente pronto!");
+
+    } catch (error) {
+        console.error("Falha ao inicializar o sistema de busca:", error);
+        alert("Erro ao carregar a busca. Tente recarregar a página.");
     }
 }
 
+// --- PASSO 3: A função de busca (praticamente a mesma de antes) ---
+function buscarPagina(termo) {
+    if (!fuse) {
+        alert("A busca ainda não está pronta, por favor aguarde um momento.");
+        return;
+    }
+
+    const termoFormatado = termo.trim().toLowerCase();
+    if (!termoFormatado) return;
+
+    const resultados = fuse.search(termoFormatado);
+    limparResultados();
+
+    if (resultados.length === 0) {
+        alert("Não encontramos resultados para: " + termo);
+    } else if (resultados.length === 1 || resultados[0].score < 0.1) {
+        window.location.href = resultados[0].item.pagina;
+    } else {
+        mostrarResultados(resultados.slice(0, 5));
+    }
+}
+
+// --- Funções auxiliares 
+function mostrarResultados(resultados) {
+    const containerResultados = document.createElement('ul');
+    containerResultados.className = 'lista-resultados-pesquisa';
+    const titulo = document.createElement('li');
+    titulo.className = 'resultado-titulo';
+    titulo.textContent = 'Encontramos múltiplos resultados. Onde você quer ir?';
+    containerResultados.appendChild(titulo);
+    resultados.forEach(resultado => {
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = resultado.item.pagina;
+        const nomePagina = resultado.item.pagina.replace('.html', '').replace(/[-_]/g, ' ');
+        link.innerHTML = `Termo: "<strong>${resultado.item.termo}</strong>" <span class="pagina-destino">em ${nomePagina}</span>`;
+        item.appendChild(link);
+        containerResultados.appendChild(item);
+    });
+    document.querySelector('.cabeçalho').insertAdjacentElement('afterend', containerResultados);
+}
+
+function limparResultados() {
+    const listaExistente = document.querySelector('.lista-resultados-pesquisa');
+    if (listaExistente) listaExistente.remove();
+}
+
+// --- Event Listeners ---
 formPesquisa.addEventListener('submit', function(event) {
     event.preventDefault();
     buscarPagina(inputPesquisa.value);
 });
+
+document.addEventListener('click', function(event) {
+    if (!formPesquisa.contains(event.target)) {
+        limparResultados();
+    }
+});
+
+// --- Inicia todo o processo quando a página carrega ---
+document.addEventListener('DOMContentLoaded', inicializarBusca);
