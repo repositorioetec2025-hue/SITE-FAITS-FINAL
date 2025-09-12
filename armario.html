@@ -10,59 +10,57 @@
 
 <body>
   <header class="cabeçalho">
+        <div class="container" title="Menu de Navegação">
+            <input type="checkbox" id="menu" class="container__botao"/>
+            <label for="menu">
+                <span class="cabeçalho__menu-hamburguer container__imagem"></span>
+            </label>
+            <ul class="lista-menu">
+                <li class="lista-menu__titulo">Navegação</li>
+                <li class="lista-menu__item">
+                    <a href="index.html" class="botao_inicio"> Início </a>
+                </li>
+                <li class="lista-menu__item">
+                    <a href="armario.html" class="botao_armario"> Repositório </a>
+                </li>
+                <li class="lista-menu__item">
+                    <a href="sobre-projeto.html" class="botao_projeto"> Projeto </a>
+                </li>
+                <li class="lista-menu__item">
+                    <a href="desenvolvedores.html" class="botao_desenvolvedores">
+                        Integrantes
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-    <div class="container" title="Menu de Navegação">
-        <input type="checkbox" id="menu" class="container__botao"/>
-        <label for="menu">
-            <span class="cabeçalho__menu-hamburguer container__imagem"></span>
-        </label>
-        <ul class="lista-menu">
-            <li class="lista-menu__titulo">Navegação</li>
-            <li class="lista-menu__item">
-                <a href="index.html" class="botao_inicio"> Início </a>
-            </li>
-            <li class="lista-menu__item">
-                <a href="armario.html" class="botao_armario"> Repositório </a>
-            </li>
-            <li class="lista-menu__item">
-                <a href="sobre-projeto.html" class="botao_projeto"> Projeto </a>
-            </li>
-            <li class="lista-menu__item">
-                <a href="desenvolvedores.html" class="botao_desenvolvedores">
-                    Desenvolvedores
-                </a>
-            </li>
-        </ul>
-    </div>
+        <form class="form-pesquisa" id="formPesquisa">
+            <input type="search" class="input-pesquisa" name="q" placeholder="Barra de pesquisa..." aria-label="Campo de busca" />
+            <button type="submit" class="botao-pesquisa" aria-label="Buscar">
+                <img src="./assets/Lupa.svg" alt="Imagem de uma lupa">
+            </button>
+        </form>
 
-    <form class="form-pesquisa" id="formPesquisa">
-        <input type="search" class="input-pesquisa" name="q" placeholder="Barra de pesquisa..." aria-label="Campo de busca" />
-        <button type="submit" class="botao-pesquisa" aria-label="Buscar">
-            <img src="./assets/Lupa.svg" alt="Imagem de uma lupa">
-        </button>
-    </form>
-
-    <div class="container-config" title="Menu de opções">
-       <input type="checkbox" id="config" class="container__botao__config" />
-        <label for="config">
-            <span class="cabeçalho__menu__config"></span>
-        </label>
-          <ul class="lista-menu-config">
-            <li class="lista-menu__titulo__config"> Opções </li>
-            <li class="lista-menu__item">
-                <a href="config.html" class="botao_config">
-                    Perfil
-                </a>
-            </li>
-                 <li class="lista-menu__item">
-                <a href="config.html" class="botao_config">
-                    Meus Repositórios
-                </a>
-            </li>
-          </ul>
-    </div>
-
-</header>
+        <div class="container-config" title="Menu de opções">
+           <input type="checkbox" id="config" class="container__botao__config" />
+            <label for="config">
+                <span class="cabeçalho__menu__config"></span>
+            </label>
+              <ul class="lista-menu-config">
+                <li class="lista-menu__titulo__config"> Opções </li>
+                <li class="lista-menu__item">
+                    <a href="config.html" class="botao_config">
+                        Perfil
+                    </a>
+                </li>
+                     <li class="lista-menu__item">
+                    <a href="config.html" class="botao_config">
+                        Meus Repositórios
+                    </a>
+                </li>
+              </ul>
+        </div>
+    </header>
     <main class="teste_conteudo">
 
         <h1 class="teste_conteudo__conteudo__titulo">

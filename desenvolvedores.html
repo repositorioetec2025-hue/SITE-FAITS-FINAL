@@ -8,101 +8,149 @@
     
 </head>
 <body>
-   <header class="cabeçalho">
+  <header class="cabeçalho">
+        <div class="container" title="Menu de Navegação">
+            <input type="checkbox" id="menu" class="container__botao"/>
+            <label for="menu">
+                <span class="cabeçalho__menu-hamburguer container__imagem"></span>
+            </label>
+            <ul class="lista-menu">
+                <li class="lista-menu__titulo">Navegação</li>
+                <li class="lista-menu__item">
+                    <a href="index.html" class="botao_inicio"> Início </a>
+                </li>
+                <li class="lista-menu__item">
+                    <a href="armario.html" class="botao_armario"> Repositório </a>
+                </li>
+                <li class="lista-menu__item">
+                    <a href="sobre-projeto.html" class="botao_projeto"> Projeto </a>
+                </li>
+                <li class="lista-menu__item">
+                    <a href="desenvolvedores.html" class="botao_desenvolvedores">
+                        Integrantes
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-    <div class="container" title="Menu de Navegação">
-        <input type="checkbox" id="menu" class="container__botao"/>
-        <label for="menu">
-            <span class="cabeçalho__menu-hamburguer container__imagem"></span>
-        </label>
-        <ul class="lista-menu">
-            <li class="lista-menu__titulo">Navegação</li>
-            <li class="lista-menu__item">
-                <a href="index.html" class="botao_inicio"> Início </a>
-            </li>
-            <li class="lista-menu__item">
-                <a href="armario.html" class="botao_armario"> Repositório </a>
-            </li>
-            <li class="lista-menu__item">
-                <a href="sobre-projeto.html" class="botao_projeto"> Projeto </a>
-            </li>
-            <li class="lista-menu__item">
-                <a href="desenvolvedores.html" class="botao_desenvolvedores">
-                    Desenvolvedores
-                </a>
-            </li>
-        </ul>
-    </div>
+        <form class="form-pesquisa" id="formPesquisa">
+            <input type="search" class="input-pesquisa" name="q" placeholder="Barra de pesquisa..." aria-label="Campo de busca" />
+            <button type="submit" class="botao-pesquisa" aria-label="Buscar">
+                <img src="./assets/Lupa.svg" alt="Imagem de uma lupa">
+            </button>
+        </form>
 
-    <form class="form-pesquisa" id="formPesquisa">
-        <input type="search" class="input-pesquisa" name="q" placeholder="Barra de pesquisa..." aria-label="Campo de busca" />
-        <button type="submit" class="botao-pesquisa" aria-label="Buscar">
-            <img src="./assets/Lupa.svg" alt="Imagem de uma lupa">
-        </button>
-    </form>
-
-    <div class="container-config" title="Menu de opções">
-       <input type="checkbox" id="config" class="container__botao__config" />
-        <label for="config">
-            <span class="cabeçalho__menu__config"></span>
-        </label>
-          <ul class="lista-menu-config">
-            <li class="lista-menu__titulo__config"> Opções </li>
-            <li class="lista-menu__item">
-                <a href="config.html" class="botao_config">
-                    Perfil
-                </a>
-            </li>
-                 <li class="lista-menu__item">
-                <a href="config.html" class="botao_config">
-                    Meus Repositórios
-                </a>
-            </li>
-          </ul>
-    </div>
-
-</header>
+        <div class="container-config" title="Menu de opções">
+           <input type="checkbox" id="config" class="container__botao__config" />
+            <label for="config">
+                <span class="cabeçalho__menu__config"></span>
+            </label>
+              <ul class="lista-menu-config">
+                <li class="lista-menu__titulo__config"> Opções </li>
+                <li class="lista-menu__item">
+                    <a href="config.html" class="botao_config">
+                        Perfil
+                    </a>
+                </li>
+                     <li class="lista-menu__item">
+                    <a href="config.html" class="botao_config">
+                        Meus Repositórios
+                    </a>
+                </li>
+              </ul>
+        </div>
+    </header>
 <main>
     <h1 class="titulo_desenvolvedores">
-        <strong>Desenvolvedores do projeto</strong>
+        <strong>Integrantes do Projeto</strong>
     </h1>
-    
-    <div class="slider">
-        <div class="slides">
-            <input type="radio" name="radio-btn" id="radio1"> 
-            <input type="radio" name="radio-btn" id="radio2">
-            <input type="radio" name="radio-btn" id="radio3">
-            
-            <div class="slide first">
+
+    <h2 class="subtitulo-desenvolvedor">
+        <strong>Desenvolvedores do site</strong>
+    </h2>
+    <div class="slider-js" id="devs-slider">
+        <div class="slider-js__slides">
+            <div class="slider-js__slide">
                 <h3 class="nome-desenvolvedor">Igor Brandon Hasler</h3>
                 <img class="slide-img" src="./assets/Foto-Igor.png" alt="Foto do Igor Brandon Hasler"> 
             </div>
-
-            <div class="slide">
+            <div class="slider-js__slide">
                 <h3 class="nome-desenvolvedor">Gustavo Santana Marcolino</h3>
                 <img class="slide-img" src="./assets/Foto-Gustavo.png" alt="Foto do Gustavo Santana Marcolino">
             </div>
-
-            <div class="slide">
+            <div class="slider-js__slide">
                 <h3 class="nome-desenvolvedor">Murilo Gracias Stender</h3>
-                <img class="slide-img" src="./assets/Foto-Murilo.png" alt="Foto do Murilo Gracias Stender">
+                <img class="slide-img" src="./assets/imagem-Murilo.jpg" alt="Foto do Murilo Gracias Stender">
             </div>
-            
-            <div class="navigation-auto">
-                <div class="auto-btn1"></div>
-                <div class="auto-btn2"></div>
-                <div class="auto-btn3"></div>
-            </div>    
         </div>
+        
+        <button class="slider-js__btn slider-js__btn--prev">&lt;</button>
+        <button class="slider-js__btn slider-js__btn--next">&gt;</button>
+        <div class="slider-js__dots"></div>
+    </div>
 
-        <div class="manual-navigation">
-            <label for="radio1" class="manual-btn"></label>
-            <label for="radio2" class="manual-btn"></label>
-            <label for="radio3" class="manual-btn"></label>
+    <h2 class="subtitulo-desenvolvedor">
+    <strong>Participantes</strong>
+</h2>
+
+<div class="slider-js">
+    <div class="slider-js__slides">
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 1]</h3>
+            <img class="slide-img" src="caminho/para/imagem1.jpg" alt="Foto do Integrante 1">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 2]</h3>
+            <img class="slide-img" src="caminho/para/imagem2.jpg" alt="Foto do Integrante 2">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 3]</h3>
+            <img class="slide-img" src="caminho/para/imagem3.jpg" alt="Foto do Integrante 3">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 4]</h3>
+            <img class="slide-img" src="caminho/para/imagem4.jpg" alt="Foto do Integrante 4">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 5]</h3>
+            <img class="slide-img" src="caminho/para/imagem5.jpg" alt="Foto do Integrante 5">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 6]</h3>
+            <img class="slide-img" src="caminho/para/imagem6.jpg" alt="Foto do Integrante 6">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 7]</h3>
+            <img class="slide-img" src="caminho/para/imagem7.jpg" alt="Foto do Integrante 7">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 8]</h3>
+            <img class="slide-img" src="caminho/para/imagem8.jpg" alt="Foto do Integrante 8">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 9]</h3>
+            <img class="slide-img" src="caminho/para/imagem9.jpg" alt="Foto do Integrante 9">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 10]</h3>
+            <img class="slide-img" src="caminho/para/imagem10.jpg" alt="Foto do Integrante 10">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 11]</h3>
+            <img class="slide-img" src="caminho/para/imagem11.jpg" alt="Foto do Integrante 11">
+        </div>
+        <div class="slider-js__slide">
+            <h3 class="nome-desenvolvedor">[Nome Integrante 12]</h3>
+            <img class="slide-img" src="caminho/para/imagem12.jpg" alt="Foto do Integrante 12">
         </div>
     </div>
-</main>
 
+    <button class="slider-js__btn slider-js__btn--prev">&lt;</button>
+    <button class="slider-js__btn slider-js__btn--next">&gt;</button>
+
+    <div class="slider-js__dots"></div>
+</div>
+</main>
 
     <footer class="site-footer">
         <div class="footer-container">
