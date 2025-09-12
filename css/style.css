@@ -97,6 +97,16 @@ main {
   text-align: center;
 }
 
+.Projeto_conteudo_subtitulo {
+    font-family: var(--fonte-titulo);
+    font-weight: 200;
+    font-size: var(--tamanho-subtitulo);
+    color: var(--cor-destaque);
+    margin-bottom: 2%;
+    margin-top: 10%;
+    text-align: center;
+}
+
 /* ==========================================================================
    3. CABEÇALHO (HEADER) 
    ========================================================================== */
@@ -437,8 +447,8 @@ main {
 }
 
 .slider-js__dot {
-    width: 12px; /* Bolinhas um pouco menores no celular */
-    height: 12px;
+    width: 18px; 
+    height: 18px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
@@ -446,7 +456,7 @@ main {
 }
 
 .slider-js__dot:hover {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: var(--cor-botao);
 }
 
 .slider-js__dot--active {
@@ -454,13 +464,13 @@ main {
 }
 
 /* ==========================================================================
-   PÁGINA 'SOBRE O PROJETO'
+   PÁGINA SOBRE O PROJETO
    ========================================================================== */
 
 .Projeto_conteudo_paragrafo {
     font-family: var(--fonte-texto);
     font-size: var(--tamanho-texto);
-    max-width: 75ch; /* Limita a largura a aproximadamente 75 caracteres */
+    max-width: 90%; /* Limita a largura a aproximadamente 75 caracteres */
     width: 100%; 
     line-height: 1.7; 
     text-align: justify; 
@@ -501,7 +511,7 @@ main {
 }
    
 /* ==========================================================================
-   5. RODAPÉ (FOOTER) - ATUALIZADO COM ABORDAGEM MOBILE-FIRST
+   5. RODAPÉ (FOOTER) 
    ========================================================================== */
 
 .site-footer {
@@ -510,7 +520,7 @@ main {
     color: #f4f4f4;
     padding: 40px 20px; /* Espaçamento controlado e ideal para mobile */
     font-family: var(--fonte-texto);
-    font-size: 15px;
+    font-size: 10px;
     line-height: 1.6;
     text-align: center; /* Centraliza o texto das seções no mobile */
 }
@@ -537,7 +547,7 @@ main {
 .footer-section h4 {
     color: var(--cor-destaque);
     font-family: var(--fonte-titulo);
-    font-size: 18px;
+    font-size: 10px;
     margin-top: 0;
     margin-bottom: 15px;
     text-transform: uppercase;
@@ -685,6 +695,7 @@ main {
         text-align: left;
         padding: 45px 0 20px;
         padding: 4% 5% 2%;
+        font-size: 16px;
      }
 
     .footer-container {
@@ -694,6 +705,10 @@ main {
     .footer-section {
         width: 30%; 
         margin-bottom: 0; 
+    }
+
+    .footer-section h4 {
+    font-size: 16px;
     }
 
 @media (min-width: 1024px) {
