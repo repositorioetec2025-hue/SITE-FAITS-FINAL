@@ -1,24 +1,73 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Site Faits</title> <link rel="stylesheet" href="./css/style.css" />
+    <meta charset="UTF-8">
+    <title>Perfil e Login</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 
-<body class="Body_config"> 
-  <header class="cabeçalho_config">
-    <a class="Botao_setinha" href="index.html" aria-label="Voltar para a página inicial" title="Voltar para o inicio"></a>
-  </header>
+<body class="Body_config">
+    <header class="cabeçalho_config">
+        <a class="Botao_setinha" href="index.html" aria-label="Voltar para a página inicial" title="Voltar para o inicio"></a>
+    </header>
 
-  <main class="Configurações">
-    <h1 class="Configurações_titulo">
-      <strong>Configurações</strong>
-    </h1>
+  <main class="main-usuario">
+    <div class="profile-page__section" id="loginSection">
+        <h2 class="profile-page__title">Login</h2>
+        <form class="profile-page__form" id="loginForm">
+            <label class="profile-page__label" for="username">Usuário:</label>
+            <div class="profile-page__field-group">
+                <i class='bx bxs-user'></i>
+                <input class="profile-page__input" type="text" id="username" name="username">
+            </div>
+            <br>
+            <label class="profile-page__label" for="password">Senha:</label>
+            <div class="profile-page__field-group">
+                <i class='bx bx-lock-alt'></i>
+                <input class="profile-page__input" type="password" id="password" name="password">
+            </div>
+            <br>
+            <button class="profile-page__button" type="submit">Entrar</button>
+            <button type="button" class="botao-criar" data-section="profile">Criar conta</button>  
+        </form>  
+    </div>
+    
+    <div class="profile-page__section" id="profileSection" style="display:none;">
+        <h2 class="profile-page__title">Criar conta</h2>
+        <form class="profile-page__form" id="profileForm">
+            <label class="profile-page__label" for="new-username">Usuário:</label>
+            <div class="profile-page__field-group">
+                <i class='bx bxs-user'></i>
+                <input class="profile-page__input" type="text" id="new-username" name="new-username">
+            </div>
+            <br>
+            <label class="profile-page__label" for="new-email">E-mail:</label>
+            <div class="profile-page__field-group">
+                <i class='bx bx-envelope'></i>
+                <input class="profile-page__input" type="email" id="new-email" name="new-email">
+            </div>
+            <br>
+            <label class="profile-page__label" for="new-password">Senha:</label>
+            <div class="profile-page__field-group">
+                <i class='bx bx-lock-alt'></i>
+                <input class="profile-page__input" type="password" id="new-password" name="new-password">
+            </div>
+            <br>
+            <label class="profile-page__label" for="confirm-password">Confirmar Senha:</label>
+            <div class="profile-page__field-group">
+                <i class='bx bx-lock-alt'></i>
+                <input class="profile-page__input" type="password" id="confirm-password" name="confirm-password">
+            </div>
+            <br>
+            <button class="profile-page__button" type="submit">Criar conta</button>
+            <button type="button" class="botao-login" data-section="login">Já tenho uma conta</button>
+        </form>
+    </div>
+</main>
 
-  </main>
-
-  <footer class="rodape_config">
-    </footer>
+    <script src="script.js"></script>  
 </body>
 </html>

@@ -581,8 +581,172 @@ main {
 }
 
 
+/* ==========================================================================
+   6. Perfil
+   ========================================================================== */
+
+/* 6.1. Estilo da Página de Usuário */
+.main-usuario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: var(--espaco-xl);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* 6.2. Seções de Login e Cadastro */
+.profile-page__section {
+    width: 100%;
+    max-width: 400px;
+    padding: var(--espaco-xl);
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+/* Título das seções */
+.profile-page__title {
+    font-family: var(--fonte-titulo);
+    font-weight: 400;
+    font-size: var(--tamanho-subtitulo);
+    color: var(--cor-destaque);
+    text-align: center;
+    margin-bottom: var(--espaco-lg);
+}
+
+/* Formulários */
+.profile-page__form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Rótulos dos campos */
+.profile-page__label {
+    display: block;
+    font-family: var(--fonte-texto);
+    font-size: var(--tamanho-texto);
+    color: var(--cor-primaria);
+    margin-bottom: var(--espaco-sm);
+}
+
+/* Grupo de campo e ícone */
+.profile-page__field-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--espaco-lg);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: var(--espaco-sm);
+    background-color: white;
+}
+
+.profile-page__field-group:focus-within {
+    border-color: transparent;
+    outline: 2px solid var(--cor-destaque);
+}
 
 
+.profile-page__field-group .bx {
+    color: var(--cor-primaria);
+    font-size: var(--tamanho-subtitulo);
+    margin-right: var(--espaco-sm);
+}
+
+
+.profile-page__input {
+    flex-grow: 1;
+    border: none;
+    padding: var(--espaco-sm) 0;
+    font-family: var(--fonte-texto);
+    font-size: var(--tamanho-texto);
+    color: var(--cor-primaria);
+    background-color: transparent;
+    outline: none;
+}
+
+br {
+    display: none;
+}
+
+.profile-page__button {
+    background-color: var(--cor-botao);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--tamanho-link);
+    font-weight: bold;
+    font-family: var(--fonte-texto);
+    transition: background-color 0.3s ease;
+    margin-top: var(--espaco-md);
+    width: 100%;
+}
+
+.profile-page__button:hover {
+    background-color: #a81a20;
+}
+
+.profile-page__separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: var(--espaco-xl) 0;
+    width: 100%;
+    max-width: 400px;
+}
+
+.profile-page__separator-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #ddd;
+}
+
+.profile-page__separator-text {
+    padding: 0 var(--espaco-md);
+    font-family: var(--fonte-texto);
+    font-size: var(--tamanho-texto);
+    color: #999;
+}
+
+
+.botao-criar,
+.botao-login {
+    background-color: transparent;
+    color: var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--tamanho-link);
+    font-weight: bold;
+    font-family: var(--fonte-texto);
+    transition: all 0.3s ease;
+    margin-top: var(--espaco-md);
+    width: 100%;
+}
+
+.botao-criar:hover,
+.botao-login:hover {
+    background-color: var(--cor-primaria);
+    color: white;
+}
+
+
+.oculto {
+    display: none;
+}
+
+   /* ==========================================================================
+    6.Criar Conta
+   ========================================================================== */
+
+    /* ==========================================================================
+    6.Editar perfil
+   ========================================================================== */
 
 /* ==========================================================================
    7. MEDIA QUERIES 
