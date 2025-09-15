@@ -290,9 +290,9 @@ main {
 
 
 /*======================================================
-   Parte exclusiva Config.html
-   ========================================================================== */
-.cabeçalho_config {
+   Parte exclusiva Config.html */
+.cabeçalho_config,
+.cabeçalho_perfil {
     background-color: var(--cor-cabeçalho);
     display: flex;
     flex-direction: row;
@@ -304,8 +304,8 @@ main {
 .Botao_setinha {
   display: block;
   background-image: url("../assets/setinha.jpg"); 
-  width: 24px;
-  height: 24px;
+  width: 100px;
+  height: 100px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -518,17 +518,17 @@ main {
     margin-top: 8%;
     background-color: var(--cor-cabeçalho);
     color: #f4f4f4;
-    padding: 40px 20px; /* Espaçamento controlado e ideal para mobile */
+    padding: 40px 20px; 
     font-family: var(--fonte-texto);
     font-size: 10px;
     line-height: 1.6;
-    text-align: center; /* Centraliza o texto das seções no mobile */
+    text-align: center; 
 }
 
 .footer-container {
     max-width: 1170px;
     width: 100%;
-    margin: 0 auto;
+    margin: 0;
     display: flex;
     flex-wrap: wrap; 
     justify-content: center; 
@@ -536,6 +536,7 @@ main {
 
 .footer-section {
     width: 100%; 
+    padding: 8%;
     margin-bottom: 35px; 
 }
 
@@ -580,27 +581,42 @@ main {
     font-size: 14px;
 }
 
+.instituicao-item {
+  display: flex;       
+  flex-direction: column; 
+  align-items: center;  
+  margin-bottom: 0px;   
+}
+
+.instituicao-logo {
+  width: 20px;           
+  height: 20px;          
+  margin-right: 1px;     
+  object-fit: contain;   
+}
+
+.instituicao-logo:hover {
+    transform: scale(1.60);
+}
 
 /* ==========================================================================
    6. Perfil
    ========================================================================== */
 
-/* 6.1. Estilo da Página de Usuário */
+
 .main-usuario {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    padding: var(--espaco-xl);
+    padding: var(--espaco-lg); /* Padding ajustado para não ser excessivo no celular */
     box-sizing: border-box;
     width: 100%;
 }
 
-/* 6.2. Seções de Login e Cadastro */
 .profile-page__section {
-    width: 100%;
-    max-width: 400px;
-    padding: var(--espaco-xl);
+    width: 90%; /* Perfeito para celular, ocupa a maior parte da tela */
+    padding: var(--espaco-lg);
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -611,7 +627,7 @@ main {
 .profile-page__title {
     font-family: var(--fonte-titulo);
     font-weight: 400;
-    font-size: var(--tamanho-subtitulo);
+    font-size: 1.8rem; /* Tamanho de fonte mais adequado para telas pequenas */
     color: var(--cor-destaque);
     text-align: center;
     margin-bottom: var(--espaco-lg);
@@ -623,7 +639,6 @@ main {
     flex-direction: column;
 }
 
-/* Rótulos dos campos */
 .profile-page__label {
     display: block;
     font-family: var(--fonte-texto);
@@ -648,13 +663,11 @@ main {
     outline: 2px solid var(--cor-destaque);
 }
 
-
 .profile-page__field-group .bx {
     color: var(--cor-primaria);
     font-size: var(--tamanho-subtitulo);
     margin-right: var(--espaco-sm);
 }
-
 
 .profile-page__input {
     flex-grow: 1;
@@ -712,7 +725,6 @@ br {
     color: #999;
 }
 
-
 .botao-criar,
 .botao-login {
     background-color: transparent;
@@ -735,19 +747,25 @@ br {
     color: white;
 }
 
-
 .oculto {
     display: none;
 }
 
-   /* ==========================================================================
-    6.Criar Conta
-   ========================================================================== */
 
-    /* ==========================================================================
-    6.Editar perfil
-   ========================================================================== */
+.botao-gerar-ra {
+    flex-shrink: 0;     
+    padding: 8px 12px;
+    border: 2px solid var(--cor-primaria);
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size:12px ;
+}
 
+.botao-ra:hover {
+    background-color: var(--cor-botao)
+}
+ 
 /* ==========================================================================
    7. MEDIA QUERIES 
    ========================================================================== */
@@ -848,7 +866,8 @@ br {
 }
 
 
-    /* Nova regra para o rodapé  */
+    /*======================================================
+   Rodapé  */
 
     .footer-section {
         width: 30%; 
@@ -874,6 +893,60 @@ br {
     .footer-section h4 {
     font-size: 16px;
     }
+
+    .instituicao-item {
+   display: flex;       
+   flex-direction: row; 
+   align-items: center;  
+   margin-bottom: 8px;   
+}
+
+.instituicao-logo {
+  width: 20px;           
+  height: 20px;          
+  margin-right: 8px;     
+  object-fit: contain;   
+}
+
+.instituicao-logo:hover {
+    transform: scale(1.60);
+}
+
+
+    /*======================================================
+   Parte exclusiva Config.html */
+
+.Botao_setinha {
+  width: 26px;
+  height: 26px;
+}
+
+/* ==========================================================================
+   6. Perfil */
+
+/* 6.2. Seções de Login e Cadastro */
+.profile-page__section {
+    width: 38%;
+    height: 60%;
+    padding: var(--espaco-xl);
+}
+  .main-usuario {
+        padding: var(--espaco-xl);
+    }
+
+    .profile-page__section {
+        width: 60%; 
+        max-width: 550px; 
+    }
+
+    .profile-page__title {
+        font-size: var(--tamanho-subtitulo); 
+    }
+
+    .botao-ra {
+        width: 10%; 
+    }
+
 
 @media (min-width: 1024px) {
   .teste_conteudo { padding: 0 5% }
