@@ -470,7 +470,7 @@ main {
 .Projeto_conteudo_paragrafo {
     font-family: var(--fonte-texto);
     font-size: var(--tamanho-texto);
-    max-width: 90%; /* Limita a largura a aproximadamente 75 caracteres */
+    max-width: 90%; 
     width: 100%; 
     line-height: 1.7; 
     text-align: justify; 
@@ -511,44 +511,37 @@ main {
 }
    
 /* ==========================================================================
-   5. RODAPÉ (FOOTER) 
+   5. RODAPÉ (FOOTER) - ESTILOS BASE (MOBILE FIRST)
    ========================================================================== */
 
 .site-footer {
     margin-top: 8%;
     background-color: var(--cor-cabeçalho);
     color: #f4f4f4;
-    padding: 40px 20px; 
+    padding: 10px 0px; 
     font-family: var(--fonte-texto);
-    font-size: 10px;
     line-height: 1.6;
-    text-align: center; 
+    text-align: left; 
 }
 
 .footer-container {
-    max-width: 1170px;
+    max-width: 1200px;
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;          /* Permite que as colunas quebrem a linha */
     justify-content: center; 
+    gap: 34px; 
 }
 
 .footer-section {
-    width: 100%; 
-    padding: 8%;
-    margin-bottom: 35px; 
-}
-
-
-.footer-section:last-of-type {
-    margin-bottom: 0;
+    width: 100%;
 }
 
 .footer-section h4 {
     color: var(--cor-destaque);
     font-family: var(--fonte-titulo);
-    font-size: 10px;
+    font-size: 14px;
     margin-top: 0;
     margin-bottom: 15px;
     text-transform: uppercase;
@@ -582,23 +575,21 @@ main {
 }
 
 .instituicao-item {
-  display: flex;       
-  flex-direction: column; 
-  align-items: center;  
-  margin-bottom: 0px;   
+  display: flex;          
+  flex-direction: column;
+  align-items: center;    
+  gap: 5px;
 }
 
 .instituicao-logo {
-  width: 20px;           
-  height: 20px;          
-  margin-right: 1px;     
-  object-fit: contain;   
+  width: 20px;            
+  height: 20px;           
+  object-fit: contain;  
 }
 
 .instituicao-logo:hover {
     transform: scale(1.60);
 }
-
 /* ==========================================================================
    6. Perfil
    ========================================================================== */
@@ -609,13 +600,13 @@ main {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    padding: var(--espaco-lg); /* Padding ajustado para não ser excessivo no celular */
+    padding: var(--espaco-lg);
     box-sizing: border-box;
     width: 100%;
 }
 
 .profile-page__section {
-    width: 90%; /* Perfeito para celular, ocupa a maior parte da tela */
+    width: 90%; 
     padding: var(--espaco-lg);
     background-color: #ffffff;
     border-radius: 8px;
@@ -627,7 +618,7 @@ main {
 .profile-page__title {
     font-family: var(--fonte-titulo);
     font-weight: 400;
-    font-size: 1.8rem; /* Tamanho de fonte mais adequado para telas pequenas */
+    font-size: 1.8rem; 
     color: var(--cor-destaque);
     text-align: center;
     margin-bottom: var(--espaco-lg);
@@ -772,7 +763,6 @@ br {
 
 @media (min-width: 769px) {
 
-
     .teste_conteudo__conteudo__titulo,
     .Projeto_titulo,
     .titulo_desenvolvedores,
@@ -824,7 +814,7 @@ br {
       margin-left: var(--espaco-xl);
     }
 
-    /*slider */
+    /*---slider ---*/
 
      .slider-js {
       width: 45%;
@@ -865,24 +855,18 @@ br {
     }
 }
 
-
-    /*======================================================
-   Rodapé  */
-
-    .footer-section {
-        width: 30%; 
-        margin-bottom: 0;
-    }
+  /* ---RODAPÉ --- */
 
     .site-footer {
         text-align: left;
-        padding: 45px 0 20px;
         padding: 4% 5% 2%;
         font-size: 16px;
-     }
+    }
 
     .footer-container {
-        justify-content: space-between; /* Distribui as colunas no desktop */
+        flex-direction: row; 
+        justify-content: space-between;
+        align-items: flex-start; 
     }
 
     .footer-section {
@@ -890,39 +874,39 @@ br {
         margin-bottom: 0; 
     }
 
+    .footer-navegacao {
+        display: block;
+    }
+    
     .footer-section h4 {
-    font-size: 16px;
+      font-size: 16px;
     }
 
     .instituicao-item {
-   display: flex;       
-   flex-direction: row; 
-   align-items: center;  
-   margin-bottom: 8px;   
-}
+      flex-direction: row; 
+      justify-content: flex-start;
+      gap: 8px;
+    }
 
-.instituicao-logo {
-  width: 20px;           
-  height: 20px;          
-  margin-right: 8px;     
-  object-fit: contain;   
-}
+    .instituicao-logo {
+      margin-bottom: 0;
+      margin-right: 8px; 
+    }
+
 
 .instituicao-logo:hover {
     transform: scale(1.60);
 }
 
 
-    /*======================================================
-   Parte exclusiva Config.html */
+/*---Parte exclusiva Config.html--- */
 
 .Botao_setinha {
   width: 26px;
   height: 26px;
 }
 
-/* ==========================================================================
-   6. Perfil */
+/*---6. Perfil--- */
 
 /* 6.2. Seções de Login e Cadastro */
 .profile-page__section {
