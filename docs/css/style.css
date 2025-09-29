@@ -360,9 +360,252 @@ main {
   min-height: 400px;
 }
 
+
 /* ==========================================================================
-   SLIDER UNIVERSAL 
+    REPOSITÓRIO DE PROJETOS
    ========================================================================== */
+
+.container-projetos {
+    max-width: 1200px;
+    margin: 0px auto;
+    padding: 0 20px;
+}
+
+.hero-subtitle {
+    font-family: var(--fonte-texto); /* ADAPTADO */
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    color: var(--cor-primaria); /* ADAPTADO */
+    font-weight: 300;
+}
+
+/* Títulos de seção como "FILTRAR" e "PROJETOS" */
+.section-heading {
+    font-family: var(--fonte-titulo); /* ADAPTADO */
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+    color: var(--cor-primaria); /* ADAPTADO */
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+/* Seção dos botões de filtro */
+.filter-section {
+    margin-bottom: 50px;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.filter-btn {
+    background-color: #fff;
+    color: var(--cor-primaria); /* ADAPTADO */
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-family: var(--fonte-texto); /* ADAPTADO */
+}
+
+.filter-btn:hover {
+    background-color: var(--cor-destaque); /* ADAPTADO */
+    border-color: var(--cor-destaque); /* ADAPTADO */
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background-color: var(--cor-cabeçalho); /* ADAPTADO */
+    border-color: var(--cor-cabeçalho); /* ADAPTADO */
+    color: #fff;
+    transform: scale(1.02);
+}
+
+/* Grid de projetos */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.project-card {
+    background-color: #ffffff; /* Fundo branco para os cards */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eee;
+}
+
+.project-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Miniatura da imagem do projeto */
+.project-thumbnail {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.thumbnail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .thumbnail-img {
+    transform: scale(1.05);
+}
+
+/* Informações do projeto */
+.project-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.project-title {
+    font-family: var(--fonte-titulo); /* ADAPTADO */
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--cor-primaria); /* ADAPTADO */
+}
+
+.project-description {
+    font-family: var(--fonte-texto); /* ADAPTADO */
+    font-size: 0.95rem;
+    color: #555; /* Cor para descrição */
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.btn-view-project {
+    display: block;
+    background-color: var(--cor-botao); /* ADAPTADO */
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-family: var(--fonte-texto); /* ADAPTADO */
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-view-project:hover {
+    background-color: #a81a20; /* Vermelho um pouco mais escuro, para o hover */
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/* Classe para ocultar cards quando filtrados pelo JS */
+.project-card.hidden {
+    display: none;
+}
+
+/* Estilo para o botão de adicionar projeto */
+.btn-add-project {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 0;
+    padding: 12px 20px;
+    background-color: var(--cor-cabeçalho); /* ADAPTADO */
+    color: #fff;
+    border: 1px solid var(--cor-cabeçalho); /* ADAPTADO */
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--fonte-texto); /* ADAPTADO */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-add-project:hover {
+    background-color: #4a505c;
+}
+
+/* Formulário de Adicionar Projeto */
+.add-project-form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 50px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+}
+
+.add-project-form .section-heading {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--fonte-texto); /* ADAPTADO */
+    color: var(--cor-primaria); /* ADAPTADO */
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--fonte-texto); /* ADAPTADO */
+}
+
+.form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #5a6268;
+}
+
+/* Classe para esconder/mostrar o formulário */
+.hidden {
+    display: none;
+}
+
+
+/* ==========================================================================
+   Slider Universal
+   ========================================================================== */
+
 
 .slider-js {
     width: 95vw;
@@ -932,9 +1175,4 @@ br {
     }
 
 
-@media (min-width: 1024px) {
-  .teste_conteudo { padding: 0 5% }
-    .conteudo_principal_wrapper { 
-      gap: var(--espaco-lg);
-  }
-}
+

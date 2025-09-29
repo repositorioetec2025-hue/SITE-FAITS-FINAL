@@ -61,22 +61,68 @@
               </ul>
         </div>
     </header>
-    <main class="teste_conteudo">
-
+  <main class="container-projetos">
         <h1 class="teste_conteudo__conteudo__titulo">
             <strong>
-                <b class="negrito1">Repositórios</b>
+                <b class="negrito1">Repositório</b>
             </strong>
-         </h1>
-
-        <div class="conteudo_principal_wrapper">
-
-            <section class="teste_conteudo__conteudo">
-                <p>Essa será a parte mais importante do site, 
-                    será onde estará todo o conteúdo voltado para os alunos</p>
-            </section>
+        </h1>
     
+<section class="filter-section">
+    <h2 class="section-heading">FILTRAR</h2>
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+    </div>
+    
+    <button id="btn-mostrar-form" class="btn-add-project">Adicionar Novo Projeto +</button>
+</section>
+
+<section id="add-project-section" class="add-project-form hidden">
+    <h2 class="section-heading">Novo Projeto</h2>
+    <form id="project-form">
+        <div class="form-group">
+            <label for="titulo">Título do Projeto</label>
+            <input type="text" id="titulo" required>
         </div>
+        <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="imagem">URL da Imagem (ex: assets/images/nova-imagem.jpg)</label>
+            <input type="text" id="imagem" required>
+        </div>
+        <div class="form-group">
+            <label for="link">Link para o Projeto (ex: detalhes-projeto-5.html)</label>
+            <input type="text" id="link" required>
+        </div>
+        <div class="form-group">
+            <label for="categorias">Categorias (separadas por espaço, ex: web-dev security)</label>
+            <input type="text" id="categorias" required>
+        </div>
+        <div class="form-buttons">
+            <button type="submit" class="btn-view-project">Salvar Projeto</button>
+            <button type="button" id="btn-cancelar" class="btn-cancel">Cancelar</button>
+        </div>
+    </form>
+</section>
+
+    <section class="projects-grid-section">
+        <h2 class="section-heading">PROJETOS</h2>
+        <div class="projects-grid">
+            
+            <div class="project-card" data-category="teste">
+                <div class="project-thumbnail">
+                    <img src="assets/Etec.png" alt="Miniatura do Projeto" class="thumbnail-img">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Projeto teste</h3>
+                    <p class="project-description">Teste de layout do site</p>
+                    <a href="assets/faits.png" class="btn-view-project">Ver Projeto</a>
+                </div>
+            </div>   
+            </div>
+    </section>
 </main>
 
 
@@ -116,6 +162,7 @@
         <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 
     <script src="./js/pesquisa.js"></script>
+    <script src="./js/armario.js"></script>
 </body>
 
 </html>
