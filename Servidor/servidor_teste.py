@@ -1,7 +1,7 @@
 import os 
 print('hello World! \n')
 
-# python Servidor\servidor.py 
+# python Servidor\servidor_teste.py 
 # O Python usa o padrão nome_variavel para declarar
 # pode usar  o int ou float para transformar uma string em numero
 # try except serve para em caso de erro nao realizar a mudança 

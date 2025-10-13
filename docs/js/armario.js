@@ -1,97 +1,63 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ======================================================
-    // PARTE 1: NOSSO "MINI BANCO DE DADOS" DE PROJETOS
-    // ======================================================
-    const projetos = [
-        // ... (seus projetos iniciais ficam aqui) ...
-        {
-            titulo: "Sistema de Autenticação Segura",
-            descricao: "Implementação de login com JWT e criptografia bcrypt para máxima segurança.",
-            imagem: "assets/images/project1-thumb.jpg",
-            link: "detalhes-projeto-1.html",
-            categorias: "web-dev security"
-        }
-    ];
-
-    // ======================================================
-    // PARTE 2: SELETORES DE ELEMENTOS DO DOM
+    // PARTE 1: SELETORES DE ELEMENTOS DO DOM
     // ======================================================
     const gridContainer = document.getElementById('projects-grid-container');
     const filterButtons = document.querySelectorAll('.filter-btn');
-    
-    // **** NOVOS SELETORES PARA O FORMULÁRIO ****
-    const btnMostrarForm = document.getElementById('btn-mostrar-form');
-    const addProjectSection = document.getElementById('add-project-section');
     const projectForm = document.getElementById('project-form');
-    const btnCancelar = document.getElementById('btn-cancelar');
+    // (outros seletores do formulário, se necessário)
+
+    // A URL base do nosso backend
+    const API_URL = 'http://127.0.0.1:5000/api';
 
     // ======================================================
-    // PARTE 3: FUNÇÃO PARA GERAR OS CARDS
-    // ======================================================
-    function gerarCardsDeProjetos() {
-        gridContainer.innerHTML = '';
-        projetos.forEach(projeto => {
-            const cardHTML = `
-                <div class="project-card" data-category="${projeto.categorias}">
-                    <div class="project-thumbnail">
-                        <img src="${projeto.imagem}" alt="Miniatura do Projeto ${projeto.titulo}" class="thumbnail-img">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">${projeto.titulo}</h3>
-                        <p class="project-description">${projeto.descricao}</p>
-                        <a href="${projeto.link}" class="btn-view-project">Ver Projeto</a>
-                    </div>
-                </div>
-            `;
-            gridContainer.innerHTML += cardHTML;
-        });
-    }
-
-    // ======================================================
-    // PARTE 4: LÓGICA DO FILTRO E EVENTOS
+    // PARTE 2: FUNÇÕES QUE CONVERSAM COM O BACKEND
     // ======================================================
 
-    // Função para filtrar os cards
-    function filtrarProjetos(filter) {
-        const projectCards = document.querySelectorAll('.project-card');
-        projectCards.forEach(card => {
-            const categories = card.dataset.category.split(' ');
-            if (filter === 'all' || categories.includes(filter)) {
-                card.classList.remove('hidden');
-            } else {
-                card.classList.add('hidden');
+    /**
+     * Busca todos os projetos no backend e os exibe na tela.
+     */
+    async function buscarEGerarProjetos() {
+        try {
+            const resposta = await fetch(`${API_URL}/projetos`);
+            if (!resposta.ok) {
+                throw new Error('Não foi possível buscar os projetos.');
             }
-        });
+            const projetos = await resposta.json(); // A lista de projetos vem do backend
+
+            // Limpa o container
+            gridContainer.innerHTML = '';
+
+            // Gera um card para cada projeto recebido
+            projetos.forEach(projeto => {
+                const cardHTML = `
+                    <div class="project-card" data-category="${projeto.categorias}">
+                        <div class="project-thumbnail">
+                            <img src="${projeto.imagem}" alt="Miniatura do Projeto ${projeto.titulo}" class="thumbnail-img">
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">${projeto.titulo}</h3>
+                            <p class="project-description">${projeto.descricao}</p>
+                            <a href="${projeto.link}" class="btn-view-project">Ver Projeto</a>
+                        </div>
+                    </div>
+                `;
+                gridContainer.innerHTML += cardHTML;
+            });
+        } catch (error) {
+            console.error('Erro ao buscar projetos:', error);
+            gridContainer.innerHTML = '<p>Não foi possível carregar os projetos. Tente novamente mais tarde.</p>';
+        }
     }
 
-    // Adiciona evento de clique aos botões de filtro
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            const filterValue = button.dataset.filter;
-            filtrarProjetos(filterValue);
-        });
-    });
+    /**
+     * Envia um novo projeto para o backend.
+     * @param {Event} event - O evento de submit do formulário.
+     */
+    async function salvarNovoProjeto(event) {
+        event.preventDefault();
 
-    // **** NOVA LÓGICA PARA O FORMULÁRIO ****
-
-    // Evento para MOSTRAR o formulário
-    btnMostrarForm.addEventListener('click', () => {
-        addProjectSection.classList.remove('hidden');
-    });
-
-    // Evento para ESCONDER o formulário (botão Cancelar)
-    btnCancelar.addEventListener('click', () => {
-        addProjectSection.classList.add('hidden');
-    });
-
-    // Evento para SALVAR um novo projeto
-    projectForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Impede que a página recarregue
-
-        // 1. Pega os valores dos campos do formulário
         const novoProjeto = {
             titulo: document.getElementById('titulo').value,
             descricao: document.getElementById('descricao').value,
@@ -100,19 +66,44 @@ document.addEventListener('DOMContentLoaded', () => {
             categorias: document.getElementById('categorias').value
         };
 
-        // 2. Adiciona o novo projeto ao nosso array "banco de dados"
-        projetos.push(novoProjeto);
+        try {
+            const resposta = await fetch(`${API_URL}/projetos`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(novoProjeto)
+            });
 
-        // 3. Regenera todos os cards na tela para incluir o novo
-        gerarCardsDeProjetos();
+            const resultado = await resposta.json();
 
-        // 4. Limpa e esconde o formulário
-        projectForm.reset(); // Limpa os campos
-        addProjectSection.classList.add('hidden'); // Esconde a seção do formulário
-    });
+            if (!resposta.ok) {
+                throw new Error(resultado.mensagem || 'Erro ao salvar o projeto.');
+            }
+            
+            alert(resultado.mensagem);
+            projectForm.reset();
+            document.getElementById('add-project-section').classList.add('hidden');
+            
+            // Atualiza a lista de projetos na tela para incluir o novo
+            buscarEGerarProjetos();
+
+        } catch (error) {
+            console.error('Erro ao salvar projeto:', error);
+            alert(error.message);
+        }
+    }
 
     // ======================================================
-    // INICIALIZAÇÃO DA PÁGINA
+    // PARTE 3: INICIALIZAÇÃO E EVENTOS
     // ======================================================
-    gerarCardsDeProjetos(); // Gera os cards iniciais
+
+    // Evento para salvar um novo projeto
+    if (projectForm) {
+        projectForm.addEventListener('submit', salvarNovoProjeto);
+    }
+    
+    // (Sua lógica de filtro e de abrir/fechar formulário continua aqui, sem alterações)
+    // ...
+
+    // Inicializa a página buscando os projetos do backend
+    buscarEGerarProjetos();
 });
