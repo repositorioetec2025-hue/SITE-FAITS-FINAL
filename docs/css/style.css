@@ -127,6 +127,7 @@ main {
     cursor: pointer;
     padding: 0;
     margin: 1rem;
+    z-index: 1010; /*Garante que ele fique sempre na frente de tudo */
 }
 
 .cabeçalho__menu-hamburguer {
@@ -155,7 +156,7 @@ main {
     display: none;
       position: absolute;
       top: 100%;
-      z-index: 10;
+      z-index: 1010; /*Garante que ele fique sempre na frente de tudo */
       background-color: var(--cor-fundo);
 }
 
@@ -273,7 +274,7 @@ main {
     position: absolute;
     top: 100%;
     right: 0;
-    z-index: 10;
+    z-index: 1010; /*Garante que ele fique sempre na frente de tudo */
     padding: 1rem;
     font-family: var(--fonte-texto);
     background-color: var(--cor-fundo);
@@ -858,8 +859,6 @@ padding: 0 20px;
 /* ==========================================================================
    6. Perfil
    ========================================================================== */
-
-
 .main-usuario {
     display: flex;
     flex-direction: column;
@@ -868,22 +867,26 @@ padding: 0 20px;
     padding: var(--espaco-lg);
     box-sizing: border-box;
     width: 100%;
+    height: 100%;
 }
 
 .profile-page__section {
-    width: 90%; 
+    width: 100%; 
+    height: 100%;
     padding: var(--espaco-lg);
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+    display: block;
+    margin-top: 4%;
 }
 
 /* Título das seções */
 .profile-page__title {
     font-family: var(--fonte-titulo);
     font-weight: 400;
-    font-size: 1.8rem; 
+    font-size:var(--tamnho-titulo);
     color: var(--cor-destaque);
     text-align: center;
     margin-bottom: var(--espaco-lg);
@@ -903,6 +906,13 @@ padding: 0 20px;
     margin-bottom: var(--espaco-sm);
 }
 
+.profile-info {
+     display: block;
+    font-family: var(--fonte-texto);
+    font-size: var(--tamanho-texto);
+    color: var(--cor-primaria);
+    margin-bottom: var(--espaco-sm);
+}
 /* Grupo de campo e ícone */
 .profile-page__field-group {
     display: flex;
@@ -912,6 +922,7 @@ padding: 0 20px;
     border-radius: 4px;
     padding: var(--espaco-sm);
     background-color: white;
+    width: 100%;
 }
 
 .profile-page__field-group:focus-within {
@@ -1007,21 +1018,16 @@ br {
     display: none;
 }
 
-
-.botao-gerar-ra {
-    flex-shrink: 0;     
-    padding: 8px 12px;
-    border: 2px solid var(--cor-primaria);
-    background-color: #f0f0f0;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size:12px ;
+.button-danger {
+    background-color: #dc3545; 
+    margin-top: 10px;
 }
 
-.botao-ra:hover {
-    background-color: var(--cor-botao)
+.button-danger:hover {
+    background-color: #c82333; 
 }
- 
+
+
 /* ==========================================================================
    7. MEDIA QUERIES 
    ========================================================================== */

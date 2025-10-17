@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    // (Aqui continua sua lista de projetos 'const projetos = [...]')
-
-    // ======================================================
+     // ======================================================
     // SELETORES DE ELEMENTOS DO DOM (sem alterações)
     // ======================================================
     const gridContainer = document.getElementById('projects-grid-container');
@@ -79,8 +76,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (projectForm) {
         projectForm.addEventListener('submit', salvarNovoProjeto); // Chama a função nomeada
     }
-
-
-    // (Aqui fica a inicialização da página 'gerarCardsDeProjetos()')
-    // ...
 });

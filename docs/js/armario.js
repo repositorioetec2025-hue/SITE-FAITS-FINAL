@@ -1,45 +1,36 @@
+// IMPORTA AS NOVAS FERRAMENTAS
+import { db, auth, storage } from './firebase-init.js';
+import { collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ======================================================
-    // PARTE 1: SELETORES DE ELEMENTOS DO DOM
-    // ======================================================
     const gridContainer = document.getElementById('projects-grid-container');
-    const filterButtons = document.querySelectorAll('.filter-btn');
     const projectForm = document.getElementById('project-form');
-    // (outros seletores do formulário, se necessário)
-
-    // A URL base do nosso backend
-    const API_URL = 'http://127.0.0.1:5000/api';
-
-    // ======================================================
-    // PARTE 2: FUNÇÕES QUE CONVERSAM COM O BACKEND
-    // ======================================================
+    // ... (outros seletores) ...
 
     /**
-     * Busca todos os projetos no backend e os exibe na tela.
+     * Busca os projetos no Firestore e os exibe.
      */
     async function buscarEGerarProjetos() {
         try {
-            const resposta = await fetch(`${API_URL}/projetos`);
-            if (!resposta.ok) {
-                throw new Error('Não foi possível buscar os projetos.');
-            }
-            const projetos = await resposta.json(); // A lista de projetos vem do backend
-
-            // Limpa o container
+            const querySnapshot = await getDocs(collection(db, "projetos"));
             gridContainer.innerHTML = '';
+            // ... (o resto desta função continua igual) ...
 
-            // Gera um card para cada projeto recebido
-            projetos.forEach(projeto => {
+            querySnapshot.forEach((doc) => {
+                const projeto = doc.data();
+                // O card agora precisa de um link para o documento
                 const cardHTML = `
-                    <div class="project-card" data-category="${projeto.categorias}">
-                        <div class="project-thumbnail">
-                            <img src="${projeto.imagem}" alt="Miniatura do Projeto ${projeto.titulo}" class="thumbnail-img">
-                        </div>
+                    <div class="project-card">
+                        <div class="project-thumbnail"><img src="${projeto.imagemURL}" alt="Miniatura do Projeto ${projeto.titulo}" class="thumbnail-img"></div>
                         <div class="project-info">
                             <h3 class="project-title">${projeto.titulo}</h3>
                             <p class="project-description">${projeto.descricao}</p>
-                            <a href="${projeto.link}" class="btn-view-project">Ver Projeto</a>
+                            <div class="project-links">
+                                ${projeto.documentoURL ? `<a href="${projeto.documentoURL}" class="btn-secondary" target="_blank">Ver Documento</a>` : ''}
+                                ${projeto.linkExterno ? `<a href="${projeto.linkExterno}" class="btn-view-project" target="_blank">Ver Link</a>` : ''}
+                            </div>
                         </div>
                     </div>
                 `;
@@ -47,63 +38,96 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch (error) {
             console.error('Erro ao buscar projetos:', error);
-            gridContainer.innerHTML = '<p>Não foi possível carregar os projetos. Tente novamente mais tarde.</p>';
         }
     }
 
     /**
-     * Envia um novo projeto para o backend.
-     * @param {Event} event - O evento de submit do formulário.
+     * Faz o upload de um arquivo para o Firebase Storage e retorna a URL de download.
+     */
+    async function uploadArquivo(file, userId) {
+        if (!file) return null;
+        // Cria um nome de arquivo único para evitar conflitos
+        const filePath = `projetos/${userId}/${Date.now()}-${file.name}`;
+        const storageRef = ref(storage, filePath);
+        
+        console.log(`Fazendo upload de: ${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        console.log(`Arquivo disponível em: ${downloadURL}`);
+        return downloadURL;
+    }
+
+    /**
+     * Salva o formulário, fazendo upload dos arquivos primeiro.
      */
     async function salvarNovoProjeto(event) {
         event.preventDefault();
+        const user = auth.currentUser;
 
-        const novoProjeto = {
-            titulo: document.getElementById('titulo').value,
-            descricao: document.getElementById('descricao').value,
-            imagem: document.getElementById('imagem').value,
-            link: document.getElementById('link').value,
-            categorias: document.getElementById('categorias').value
-        };
+        if (!user) {
+            alert("Você precisa estar logado para adicionar um projeto.");
+            return;
+        }
+
+        // Pega os arquivos dos inputs
+        const imagemFile = document.getElementById('imagem-file').files[0];
+        const documentoFile = document.getElementById('documento-file').files[0];
+
+        // Validação de obrigatoriedade
+        if (!imagemFile || !documentoFile) {
+            alert("Por favor, selecione uma imagem e um documento para o projeto.");
+            return;
+        }
 
         try {
-            const resposta = await fetch(`${API_URL}/projetos`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(novoProjeto)
-            });
+            // Mostra um feedback de "carregando" (opcional, mas recomendado)
+            const submitButton = projectForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
 
-            const resultado = await resposta.json();
+            // 1. Faz o upload dos arquivos para o Storage em paralelo
+            const [imagemURL, documentoURL] = await Promise.all([
+                uploadArquivo(imagemFile, user.uid),
+                uploadArquivo(documentoFile, user.uid)
+            ]);
 
-            if (!resposta.ok) {
-                throw new Error(resultado.mensagem || 'Erro ao salvar o projeto.');
-            }
-            
-            alert(resultado.mensagem);
-            projectForm.reset();
-            document.getElementById('add-project-section').classList.add('hidden');
-            
-            // Atualiza a lista de projetos na tela para incluir o novo
+            // 2. Monta o objeto com os dados para salvar no Firestore
+            const novoProjeto = {
+                titulo: document.getElementById('titulo').value,
+                descricao: document.getElementById('descricao').value,
+                categorias: document.getElementById('categorias').value,
+                linkExterno: document.getElementById('link').value || null, // Salva null se o link opcional estiver vazio
+                imagemURL: imagemURL,       // A URL que veio do Storage
+                documentoURL: documentoURL, // A URL que veio do Storage
+                createdAt: new Date(),
+                user_id: user.uid
+            };
+
+            // 3. Salva os metadados (incluindo as URLs) no Firestore
+            await addDoc(collection(db, "projetos"), novoProjeto);
+
+            alert("Projeto adicionado com sucesso!");
+            fecharFormulario();
             buscarEGerarProjetos();
 
         } catch (error) {
             console.error('Erro ao salvar projeto:', error);
-            alert(error.message);
+            alert("Ocorreu um erro ao salvar o projeto. Verifique o console para mais detalhes.");
+        } finally {
+            // Reativa o botão de submit, aconteça o que acontecer
+            const submitButton = projectForm.querySelector('button[type="submit"]');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Salvar Projeto';
         }
     }
 
-    // ======================================================
-    // PARTE 3: INICIALIZAÇÃO E EVENTOS
-    // ======================================================
+    // ... (suas funções de abrir/fechar formulário e eventos continuam aqui) ...
+    function abrirFormulario() { /* ... */ }
+    function fecharFormulario() { /* ... */ }
+    botoesAbrirForm.forEach(botao => botao.addEventListener('click', abrirFormulario));
+    if (btnCancelar) btnCancelar.addEventListener('click', fecharFormulario);
+    if (projectForm) projectForm.addEventListener('submit', salvarNovoProjeto);
 
-    // Evento para salvar um novo projeto
-    if (projectForm) {
-        projectForm.addEventListener('submit', salvarNovoProjeto);
-    }
-    
-    // (Sua lógica de filtro e de abrir/fechar formulário continua aqui, sem alterações)
-    // ...
-
-    // Inicializa a página buscando os projetos do backend
+    // Inicialização da Página
     buscarEGerarProjetos();
 });

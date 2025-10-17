@@ -4,170 +4,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Faits</title>
-    <link rel="stylesheet" href="./css/style.css">  
+    <title>Site Faits - Repositório</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-     <header class="cabeçalho">
+    <header class="cabeçalho">
         <div class="container" title="Menu de Navegação">
-            <input type="checkbox" id="menu" class="container__botao"/>
+            <input type="checkbox" id="menu" class="container__botao" />
             <label for="menu">
                 <span class="cabeçalho__menu-hamburguer container__imagem"></span>
             </label>
             <ul class="lista-menu">
                 <li class="lista-menu__titulo">Navegação</li>
-                <li class="lista-menu__item">
-                    <a href="index.html" class="botao_inicio"> Início </a>
-                </li>
-                <li class="lista-menu__item">
-                    <a href="armario.html" class="botao_armario"> Repositório </a>
-                </li>
-                <li class="lista-menu__item">
-                    <a href="sobre-projeto.html" class="botao_projeto"> Projeto </a>
-                </li>
-                <li class="lista-menu__item">
-                    <a href="desenvolvedores.html" class="botao_desenvolvedores">
-                        Integrantes
-                    </a>
-                </li>
+                <li class="lista-menu__item"><a href="index.html" class="botao_inicio">Início</a></li>
+                <li class="lista-menu__item"><a href="armario.html" class="botao_armario">Repositório</a></li>
+                <li class="lista-menu__item"><a href="sobre-projeto.html" class="botao_projeto">Projeto</a></li>
+                <li class="lista-menu__item"><a href="desenvolvedores.html" class="botao_desenvolvedores">Integrantes</a></li>
             </ul>
         </div>
-
         <form class="form-pesquisa" id="formPesquisa">
             <input type="search" class="input-pesquisa" name="q" placeholder="Barra de pesquisa..." aria-label="Campo de busca" />
             <button type="submit" class="botao-pesquisa" aria-label="Buscar">
                 <img src="./assets/Lupa.svg" alt="Imagem de uma lupa">
             </button>
         </form>
-
         <div class="container-config" title="Menu de opções">
-           <input type="checkbox" id="config" class="container__botao__config" />
+            <input type="checkbox" id="config" class="container__botao__config" />
             <label for="config">
                 <span class="cabeçalho__menu__config"></span>
             </label>
-              <ul class="lista-menu-config">
-                <li class="lista-menu__titulo__config"> Opções </li>
-                <li class="lista-menu__item">
-                    <a href="perfil.html" class="botao_config">
-                        Perfil
-                    </a>
-                </li>
-                     <li class="lista-menu__item">
-                    <a href="config.html" class="botao_config">
-                        Meus Repositórios
-                    </a>
-                </li>
-              </ul>
-        </div>
-    </header>   
-  <main class="container-projetos">   
-     <div class="titulo-wrapper">
-
-        <h1 class="teste_conteudo__conteudo__titulo">
-            <strong>
-                <b class="negrito1">Repositório</b>
-            </strong>
-        </h1>
-        
-        <button class="btn-adicionar" id="btn-abrir-formulario" title="Adicionar novo repositório">
-            <img src="./assets/botaoadicionar.jpg" alt="Ícone de Adicionar">
-        </button>
-
-    </div>
-<section class="filter-section">
-    <h2 class="section-heading">FILTRAR</h2>
-    <div class="filter-buttons">
-        <button class="filter-btn active" data-filter="all">Todos</button>
-    </div>
-    
-    <button id="btn-mostrar-form" class="btn-add-project">Adicionar Novo Projeto +</button>
-</section>
-
-<section id="add-project-section" class="add-project-form hidden">
-    <h2 class="section-heading">Novo Projeto</h2>
-    <form id="project-form">
-        <div class="form-group">
-            <label for="titulo">Título do Projeto</label>
-            <input type="text" id="titulo" required>
-        </div>
-        <div class="form-group">
-            <label for="descricao">Descrição</label>
-            <textarea id="descricao" rows="3" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="imagem">URL da Imagem (ex: assets/images/nova-imagem.jpg)</label>
-            <input type="text" id="imagem" required>
-        </div>
-        <div class="form-group">
-            <label for="link">Link para o Projeto (ex: detalhes-projeto-5.html)</label>
-            <input type="text" id="link" required>
-        </div>
-        <div class="form-group">
-            <label for="categorias">Categorias (separadas por espaço, ex: web-dev security)</label>
-            <input type="text" id="categorias" required>
-        </div>
-        <div class="form-buttons">
-            <button type="submit" class="btn-view-project">Salvar Projeto</button>
-            <button type="button" id="btn-cancelar" class="btn-cancel">Cancelar</button>
-        </div>
-    </form>
-</section>
-
-    <section class="projects-grid-section">
-        <h2 class="section-heading">PROJETOS</h2>
-        <div class="projects-grid">
-            
-            <div class="project-card" data-category="teste">
-                <div class="project-thumbnail">
-                    <img src="assets/Etec.png" alt="Miniatura do Projeto" class="thumbnail-img">
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">Projeto teste</h3>
-                    <p class="project-description">Teste de layout do site</p>
-                    <a href="assets/faits.png" class="btn-view-project">Ver Projeto</a>
-                </div>
-            </div>   
-            </div>
-    </section>
-</main>
-
-
-       <footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-section footer-navegacao">
-            <h4>Navegação</h4>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="sobre-projeto.html">Sobre o Projeto</a></li>
-                <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+            <ul class="lista-menu-config">
+                <li class="lista-menu__titulo__config">Opções</li>
+                <li class="lista-menu__item"><a href="perfil.html" class="botao_config">Perfil</a></li>
+                <li class="lista-menu__item"><a href="config.html" class="botao_config">Meus Repositórios</a></li>
             </ul>
         </div>
+    </header>
 
-        <div class="footer-section">
-            <h4>Projeto</h4>
-            <p>Este site é o resultado prático para a disciplina "Extensão e Dinâmicas de Aprendizagem: Sociedade do Futuro".</p>
+    <main class="container-projetos">
+
+        <div class="titulo-wrapper">
+            <h1 class="teste_conteudo__conteudo__titulo">
+                <b class="negrito1">Repositório</b>
+            </h1>
+            <button class="btn-adicionar js-abrir-form" id="btn-abrir-formulario" title="Adicionar novo repositório">
+                <img src="./assets/botaoadicionar.jpg" alt="Ícone de Adicionar">
+            </button>
         </div>
 
-        <div class="footer-section">
-            <h4>Instituição</h4>
-     <div class="instituicao-item">
-        <a href="https://www.usf.edu.br/" target="_blank" rel="noopener noreferrer">
-            <img src="./assets/Usf.png" alt="Logo USF" class="instituicao-logo">
-            <span>Universidade São Francisco</span>
-        </a>
-    </div>
+        <section class="filter-section">
+            <h2 class="section-heading">FILTRAR</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                </div>
+        </section>
 
-    <div class="instituicao-item">
-        <a href="https://www.cps.sp.gov.br/etec/" target="_blank" rel="noopener noreferrer">
-            <img src="./assets/Etec.png" alt="Logo ETEC" class="instituicao-logo">
-            <span>Escola Técnica Estadual ETEC</span>
-        </a>
-    </div>
-                
+        <section id="add-project-section" class="add-project-form hidden">
+            <h2 class="section-heading">Novo Projeto</h2>
+            <form id="project-form">
+                <div class="form-group">
+                    <label for="titulo">Título do Projeto</label>
+                    <input type="text" id="titulo" required>
+                </div>
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imagem-file">Imagem do Projeto (Obrigatório)</label>
+                    <input type="file" id="imagem-file" accept="image/*" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="documento-file">Documento do Projeto (PDF, DOCX - Obrigatório)</label>
+                    <input type="file" id="documento-file" accept=".pdf,.doc,.docx" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="link">Link Externo (Opcional)</label>
+                    <input type="text" id="link" placeholder="ex: https://github.com/seu-projeto">
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-view-project">Salvar Projeto</button>
+                    <button type="button" id="btn-cancelar" class="btn-cancel">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+       <section class="projects-grid-section">
+            <h2 class="section-heading">PROJETOS</h2>
+                <div class="projects-grid" id="projects-grid-container">
+        </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-section footer-navegacao">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="sobre-projeto.html">Sobre o Projeto</a></li>
+                    <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+                </ul>
             </div>
+
+            <div class="footer-section">
+                <h4>Projeto</h4>
+                <p>Este site é o resultado prático para a disciplina "Extensão e Dinâmicas de Aprendizagem: Sociedade do Futuro".</p>
             </div>
-    </div>
+
+            <div class="footer-section">
+                <h4>Instituição</h4>
+                <div class="instituicao-item">
+                    <a href="https://www.usf.edu.br/" target="_blank" rel="noopener noreferrer">
+                        <img src="./assets/Usf.png" alt="Logo USF" class="instituicao-logo">
+                        <span>Universidade São Francisco</span>
+                    </a>
+                </div>
+                <div class="instituicao-item">
+                    <a href="https://www.cps.sp.gov.br/etec/" target="_blank" rel="noopener noreferrer">
+                        <img src="./assets/Etec.png" alt="Logo ETEC" class="instituicao-logo">
+                        <span>Escola Técnica Estadual ETEC</span>
+                    </a>
+                </div>
+            </div>
+        </div>
 
         <div class="footer-bottom">
             <p>&copy; 2025 FAITS | Todos os direitos reservados | All rights reserved.</p>
@@ -175,8 +139,8 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
     <script src="./js/pesquisa.js"></script>
-    <script src="./js/armario.js"></script>
+    <script type="module" src="./js/armario.js"></script>
     <script src="./js/botao_adicionar.js"></script>
-</body>
-
+    </body>
 </html>
+
