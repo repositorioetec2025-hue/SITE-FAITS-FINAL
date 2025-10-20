@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil e Login</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body class="Body_config">
+    <header class="cabeçalho_perfil">
+        <a class="Botao_setinha" href="index.html" aria-label="Voltar para a página inicial" title="Voltar para o inicio"></a>
+    </header>
+
+    <main class="main-usuario">
+
+        <div class="profile-page__section" id="loginSection">
+            <h2 class="profile-page__title">Login</h2>
+            <form class="profile-page__form" id="loginForm">
+                <label class="profile-page__label" for="login-email">E-mail:</label>
+                <div class="profile-page__field-group">
+                    <i class='bx bxs-user'></i>
+                    <input class="profile-page__input" type="email" id="login-email" name="email" required>
+                </div>
+                <br>
+                <label class="profile-page__label" for="password">Senha:</label>
+                <div class="profile-page__field-group">
+                    <i class='bx bx-lock-alt'></i>
+                    <input class="profile-page__input" type="password" id="password" name="password" required>
+                </div>
+                <br>
+                <button class="profile-page__button" type="submit">Entrar</button>
+                <button type="button" class="botao-criar" data-section="profile">Criar conta</button>
+            </form>
+        </div>
+
+        <div class="profile-page__section" id="profileSection" style="display:none;">
+            <h2 class="profile-page__title">Criar conta</h2>
+            <form class="profile-page__form" id="profileForm">
+                <label class="profile-page__label" for="new-username">Usuário:</label>
+                <div class="profile-page__field-group">
+                    <i class='bx bxs-user'></i>
+                    <input class="profile-page__input" type="text" id="new-username" name="new-username" required>
+                </div>
+                <br>
+                <label class="profile-page__label" for="new-email">E-mail:</label>
+                <div class="profile-page__field-group">
+                    <i class='bx bx-envelope'></i>
+                    <input class="profile-page__input" type="email" id="new-email" name="new-email" required>
+                </div>
+                <br>
+                <label class="profile-page__label" for="new-password">Senha:</label>
+                <div class="profile-page__field-group">
+                    <i class='bx bx-lock-alt'></i>
+                    <input class="profile-page__input" type="password" id="new-password" name="new-password" required>
+                </div>
+                <br>
+                <label class="profile-page__label" for="confirm-password">Confirmar Senha:</label>
+                <div class="profile-page__field-group">
+                    <i class='bx bx-lock-alt'></i>
+                    <input class="profile-page__input" type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <br>
+                <button class="profile-page__button" type="submit">Criar conta</button>
+                <button type="button" class="botao-login" data-section="login">Já tenho uma conta</button>
+            </form>
+        </div>
+
+        <div class="profile-page__section" id="editProfileSection" style="display:none;">
+    <h2 class="profile-page__title">Meu Perfil</h2>
+    <div class="profile-info">
+        <p><strong>Usuário:</strong> <span id="displayUsername"></span></p>
+        <p><strong>Email:</strong> <span id="displayEmail"></span></p>
+        <p><strong>RA:</strong> <span id="displayRA"></span></p>
+    </div>
+    <button class="profile-page__button" id="logoutButton">Sair</button>
+
+    <button class="profile-page__button button-danger" id="deleteAccountButton">Apagar Minha Conta</button>
+    </div>
+    </main>
+
+    <script type="module" src="./js/firebase-init.js"></script>
+    
+    <script type="module" src="./js/perfil.js"></script>
+
+</body>
+</html>
