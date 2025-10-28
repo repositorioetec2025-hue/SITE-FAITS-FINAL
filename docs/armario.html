@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Site Faits</title>
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+<header class="cabeçalho">
+    <div class="cabeçalho__barra-topo"></div>
+
+    <div class="cabeçalho__container">
+        
+        <div class="cabeçalho__bloco-esquerdo">
+            <a href="index.html" class="cabeçalho__logo cabeçalho__logo--desktop">FAITS</a>
+            
+            <div class="cabeçalho__mobile-controls">
+                <div class="container" title="Menu de Navegação">
+                    <input type="checkbox" id="menu" class="container__botao"/>
+                    <label for="menu">
+                     <img src="./assets/Menu-aberto.svg" class="cabeçalho__menu-hamburguer container__imagem">
+                    </label>
+                    <ul class="lista-menu">
+                        <li class="lista-menu__titulo">Navegação</li>
+                        <li class="lista-menu__item"><a href="index.html">Início</a></li>
+                        <li class="lista-menu__item"><a href="armario.html">Repositório</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="cabeçalho__bloco-centro">
+            <a href="index.html" class="cabeçalho__logo cabeçalho__logo--mobile">FAITS</a>
+            
+            <nav class="cabeçalho__nav-desktop">
+                <a href="index.html" class="item-cabeçalho">Início</a>
+                <a href="armario.html" class="item-cabeçalho">Repositório</a>
+            </nav>
+        </div>
+
+        <div class="cabeçalho__bloco-direito">
+            <form class="form-pesquisa" id="formPesquisa">
+                 <input type="checkbox" id="search-toggle" class="search-toggle">
+                     <label for="search-toggle" class="botao-lupa" aria-label="Abrir pesquisa">
+                        <img src="./assets/lupa.png" alt="Ícone de pesquisa">
+                     </label>
+                 <input type="search" class="input-pesquisa" id="input-pesquisa" name="q" placeholder="Pesquisar..." aria-label="Campo de busca" />
+            </form>
+
+            <div class="container-config" title="Menu de opções">
+                <input type="checkbox" id="config" class="container__botao__config" />
+                <label for="config">
+                    <img src="./assets/user.svg" alt="Ícone de perfil" class="icone-perfil">
+                </label>
+                <ul class="lista-menu-config">
+                    <li class="lista-menu__titulo__config">Opções</li>
+                    <li class="lista-menu__item"><a href="perfil.html">Perfil</a></li>
+                    <li class="lista-menu__item"><a href="config.html">Meus Repositórios</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container-principal">
+
+    <div class="repositorio-layout">
+        
+        <aside class="sidebar-repositorios">
+            <h2 class="sidebar-titulo">Repositórios</h2>
+            <ul id="lista-repositorios" class="lista-repositorios">
+                <li class="active" data-repositorio="todos">Adicionar Projeto + </li>
+                <li class="active" data-repositorio="todos">Lista de Projetos</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+                <li class="" data-repositorio="todos">Teste lista filtro</li>
+            </ul>
+        </aside>
+
+        <section class="conteudo-principal">
+            <h1 id="titulo-principal" class="titulo-principal">Todos os Projetos</h1>
+            <button class="Botão-mobile">Adicionar Projeto +</button>
+            <div class="projects-grid" id="projects-grid-container">
+                <p>Projetos serão carregados aqui, pdf, imagens, dados do grupo...</p>
+                <div class="project-card-placeholder"></div>
+                <div class="project-card-placeholder"></div>
+                <div class="project-card-placeholder"></div>
+            </div>
+        </section>
+        
+    </div>
+
+</main>
+
+    <footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-section footer-navegacao">
+            <h4>Navegação</h4>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="armario.html">Armário</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Projeto</h4>
+            <p>Este site é o resultado prático para a disciplina "Extensão e Dinâmicas de Aprendizagem: Sociedade do Futuro".</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Instituição</h4>
+     <div class="instituicao-item">
+        <a href="https://www.usf.edu.br/" target="_blank" rel="noopener noreferrer">
+            <img src="./assets/Usf.png" alt="Logo USF" class="instituicao-logo">
+            <span>Universidade São Francisco</span>
+        </a>
+    </div>
+
+    <div class="instituicao-item">
+        <a href="https://www.cps.sp.gov.br/etec/" target="_blank" rel="noopener noreferrer">
+            <img src="./assets/Etec.png" alt="Logo ETEC" class="instituicao-logo">
+            <span>Escola Técnica Estadual ETEC</span>
+        </a>
+    </div>
+                
+            </div>
+            </div>
+    </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 FAITS | Todos os direitos reservados | All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+    <script src="./js/pesquisa.js"></script>
+
+    </body>
+</html>
+
