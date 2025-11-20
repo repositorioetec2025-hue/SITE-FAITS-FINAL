@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Master</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="Body_config">
+    <header class="cabeçalho_perfil">
+      <a
+        class="Botao_setinha"
+        href="index.html"
+        aria-label="Voltar"
+        title="Voltar"
+      ></a>
+    </header>
+
+    <main class="main-usuario">
+      <div class="profile-page__section">
+        <h2 class="profile-page__title">Login Master</h2>
+
+        <form class="profile-page__form" id="loginForm">
+          <label class="profile-page__label" for="ra">RA:</label>
+          <div class="profile-page__field-group">
+            <i class="bx bx-id-card"></i>
+            <input
+              class="profile-page__input"
+              type="text"
+              id="ra"
+              name="ra"
+              required
+            />
+          </div>
+          <br />
+
+          <label class="profile-page__label" for="senha">Senha:</label>
+          <div class="profile-page__field-group">
+            <i class="bx bx-lock-alt"></i>
+            <input
+              class="profile-page__input"
+              type="password"
+              id="senha"
+              name="senha"
+              required
+            />
+          </div>
+          <br />
+
+          <button class="profile-page__button" type="submit">Entrar</button>
+        </form>
+      </div>
+    </main>
+
+    <script type="module" src="./js/login-master.js"></script>
+  </body>
+</html>

@@ -141,6 +141,9 @@ loginForm.addEventListener("submit", async (e) => {
       return;
     }
 
+    // salva o RA SEMPRE
+    localStorage.setItem("raLogado", dados.ra);
+
     // Se o usuário quiser, salva o login no localStorage
     if (lembrar) {
       localStorage.setItem(
