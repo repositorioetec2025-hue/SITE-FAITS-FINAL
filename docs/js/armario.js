@@ -1,101 +1,144 @@
 // js/armario.js
+import { db } from "./firebase-config.js";
+import {
+  ref,
+  set,
+  push,
+  get,
+  child,
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 
-// Espera o HTML carregar completamente antes de rodar o script
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ armario.js carregado com sucesso.");
 
-    console.log("armario.js carregado. Iniciando lógica do formulário...");
+  // =============================
+  // 🔧 SELETORES
+  // =============================
+  const botoesAbrirForm = document.querySelectorAll(".js-abrir-form");
+  const cadastrarSection = document.getElementById("add-project-section");
+  const projectForm = document.getElementById("project-form");
+  const btnCancelar = document.getElementById("btn-cancelar");
+  const containerProjetos = document.getElementById("projects-grid-container");
 
-    // ======================================================
-    // SELETORES DE ELEMENTOS DO DOM (O Mapa da Página)
-    // ======================================================
-    
-    // 1. Os botões que ABREM o formulário (ambos têm a mesma classe)
-    const botoesAbrirForm = document.querySelectorAll('.js-abrir-form');
+  // =============================
+  // 🪟 FORMULÁRIO
+  // =============================
+  function abrirFormulario() {
+    cadastrarSection.classList.remove("hidden");
+    cadastrarSection.scrollIntoView({ behavior: "smooth" });
+  }
 
-    // 2. A seção do formulário que será mostrada/escondida
-    const addProjectSection = document.getElementById('add-project-section');
+  function fecharFormulario() {
+    cadastrarSection.classList.add("hidden");
+    projectForm.reset();
+  }
 
-    // 3. O formulário em si (para 'submit' e 'reset')
-    const projectForm = document.getElementById('project-form');
+  // =============================
+  // 💾 SALVAR PROJETO
+  // =============================
+  async function handleSalvarProjeto(event) {
+    event.preventDefault();
 
-    // 4. O botão de "Cancelar" dentro do formulário
-    const btnCancelar = document.getElementById('btn-cancelar');
+    const titulo = document.getElementById("form-titulo").value.trim();
+    const descricao = document.getElementById("form-descricao").value.trim();
+    const curso = document.getElementById("form-curso").value.trim();
+    const linkExterno = document.getElementById("form-link").value.trim();
+    const arquivoInput = document.getElementById("form-documento-file");
+    const arquivo = arquivoInput.files[0];
 
-    // ======================================================
-    // FUNÇÕES DE CONTROLE DO FORMULÁRIO
-    // ======================================================
-
-    /**
-     * Esta é a FUNÇÃO PARA O BOTÃO: ela torna o formulário visível.
-     */
-    function abrirFormulario() {
-        if (addProjectSection) {
-            addProjectSection.classList.remove('hidden');
-            console.log("Formulário aberto.");
-        } else {
-            console.error("Erro: A seção do formulário (#add-project-section) não foi encontrada.");
-        }
+    if (!titulo || !descricao || !curso || !arquivo) {
+      alert("Preencha todos os campos obrigatórios!");
+      return;
     }
 
-    /**
-     * Esta é a FUNÇÃO para fechar o formulário.
-     */
-    function fecharFormulario() {
-        if (addProjectSection) {
-            addProjectSection.classList.add('hidden');
-            if (projectForm) {
-                projectForm.reset(); // Limpa os campos do formulário
-            }
-            console.log("Formulário fechado.");
-        }
+    if (arquivo.type !== "application/pdf") {
+      alert("Por favor, selecione um arquivo PDF válido.");
+      return;
     }
 
-    /**
-     * Esta é a FUNÇÃO para "RECEBER" o formulário.
-     * Ela é acionada ao clicar no botão "Salvar Projeto".
-     */
-    function handleSalvarProjeto(event) {
-        // 1. Impede que a página recarregue (o comportamento padrão do formulário)
-        event.preventDefault(); 
-
-        // 2. "Recebe" os dados (apenas para teste)
-        // Usamos os IDs únicos que definimos no HTML corrigido
-        const titulo = document.getElementById('form-titulo').value;
-        const repositorio = document.getElementById('form-repositorio').value;
-
-        // 3. Mostra um feedback de que funcionou
-        console.log("Formulário enviado! (Modo de Teste)");
-        console.log("Título:", titulo);
-        console.log("Repositório:", repositorio);
-        alert(`Projeto "${titulo}" salvo no modo de teste!`);
-
-        // 4. Fecha o formulário
-        fecharFormulario();
+    // Capturar integrantes dinamicamente
+    const integrantes = [];
+    for (let i = 1; i <= 6; i++) {
+      const nome = document.getElementById(`integrante${i}-nome`)?.value.trim();
+      const ra = document.getElementById(`integrante${i}-ra`)?.value.trim();
+      if (nome && ra) integrantes.push({ nome, ra });
     }
 
-    // ======================================================
-    // INICIALIZAÇÃO DOS EVENTOS (Ligando os "fios")
-    // ======================================================
+    try {
+      const projetosRef = ref(db, "projetos");
+      const novoProjetoRef = push(projetosRef);
+      const idProjeto = novoProjetoRef.key;
 
-    // Verifica se os elementos necessários existem antes de ligar os eventos
-    
-    if (botoesAbrirForm.length > 0 && addProjectSection) {
-        // Adiciona o evento de 'click' a CADA botão que abre o formulário
-        botoesAbrirForm.forEach(botao => {
-            botao.addEventListener('click', abrirFormulario);
-        });
-        console.log(`Pronto! ${botoesAbrirForm.length} botão(ões) de abrir formulário foram ligados.`);
+      await set(novoProjetoRef, {
+        id: idProjeto,
+        titulo,
+        descricao,
+        curso,
+        nomeArquivo: arquivo.name,
+        linkExterno,
+        integrantes,
+        dataCriacao: new Date().toISOString(),
+      });
+
+      alert(`✅ Projeto "${titulo}" cadastrado com sucesso!`);
+      fecharFormulario();
+      carregarTodosProjetos();
+    } catch (error) {
+      console.error("❌ Erro ao salvar projeto:", error);
+      alert("Erro ao salvar projeto. Verifique o console.");
+    }
+  }
+
+  // =============================
+  // 📋 LISTAR TODOS OS PROJETOS
+  // =============================
+  async function carregarTodosProjetos() {
+    const dbRef = ref(db);
+    const snapshot = await get(child(dbRef, "projetos"));
+
+    containerProjetos.innerHTML = "";
+
+    if (snapshot.exists()) {
+      const projetos = Object.values(snapshot.val());
+      projetos.reverse(); // mostra os mais recentes primeiro
+
+      projetos.forEach((projeto) => {
+        const card = document.createElement("div");
+        card.classList.add("projeto-card");
+        card.innerHTML = `
+          <h3>${projeto.titulo}</h3>
+          <p><b>Descrição:</b> ${projeto.descricao}</p>
+          <p><b>Curso:</b> ${projeto.curso}</p>
+          <p><b>Integrantes:</b> ${
+            projeto.integrantes && projeto.integrantes.length > 0
+              ? projeto.integrantes.map((i) => `${i.nome} (${i.ra})`).join(", ")
+              : "Nenhum integrante cadastrado"
+          }</p>
+          ${
+            projeto.linkExterno
+              ? `<a href="${projeto.linkExterno}" target="_blank">🔗 Acessar Link</a>`
+              : ""
+          }
+        `;
+        containerProjetos.appendChild(card);
+      });
     } else {
-        console.warn("Aviso: Botões de abrir (.js-abrir-form) ou a seção do formulário (#add-project-section) não foram encontrados.");
+      containerProjetos.innerHTML =
+        "<p>📂 Nenhum projeto cadastrado ainda.</p>";
     }
+  }
 
-    // Liga o evento de 'click' ao botão "Cancelar"
-    if (btnCancelar) {
-        btnCancelar.addEventListener('click', fecharFormulario);
-    }
+  // =============================
+  // ⚙️ EVENTOS
+  // =============================
+  botoesAbrirForm.forEach((btn) =>
+    btn.addEventListener("click", abrirFormulario)
+  );
+  btnCancelar.addEventListener("click", fecharFormulario);
+  projectForm.addEventListener("submit", handleSalvarProjeto);
 
-    // Liga o evento de 'submit' ao formulário
-    if (projectForm) {
-        projectForm.addEventListener('submit', handleSalvarProjeto);
-    }
+  // =============================
+  // 🚀 INICIALIZAÇÃO
+  // =============================
+  carregarTodosProjetos();
 });
