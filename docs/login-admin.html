@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Master</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="Body_config">
+    <header class="cabeçalho_perfil">
+      <a
+        class="Botao_setinha"
+        href="index.html"
+        aria-label="Voltar"
+        title="Voltar"
+      ></a>
+    </header>
+
+<main class="main-usuario">
+        <section id="section-login-master" class="profile-page__section" style="max-width: 400px; margin: 50px auto;">
+            <h2 class="profile-page__title">Acesso Restrito</h2>
+            <form class="profile-page__form" id="loginMasterForm">
+                <label class="profile-page__label">RA de Administrador:</label>
+                <div class="profile-page__field-group">
+                    <i class="bx bx-id-card"></i>
+                    <input class="profile-page__input" type="text" id="login-ra" required>
+                </div>
+                <br>
+                <label class="profile-page__label">Senha:</label>
+                <div class="profile-page__field-group">
+                    <i class="bx bx-lock-alt"></i>
+                    <input class="profile-page__input" type="password" id="login-senha" required>
+                </div>
+                <br>
+                <button class="profile-page__button" type="submit">Acessar Painel</button>
+            </form>
+        </section>
+
+        <div id="section-painel-master" class="painel-controle-layout hidden">
+            
+            <section class="painel-card">
+                <h2 class="section-heading">
+                    <i class='bx bxs-briefcase-alt-2'></i> Cadastrar Professor
+                </h2>
+                <form id="form-funcionarios" class="form-admin">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" id="func-nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>RA (Login)</label>
+                        <input type="text" id="func-ra" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha Inicial</label>
+                        <input type="text" id="func-senha" required>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-view-project">Criar Acesso</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="painel-card">
+                <h2 class="section-heading">
+                    <i class='bx bxs-graduation'></i> Controle de alunos
+                </h2>
+                <form id="form-alunos" class="form-admin">
+                    <div class="form-group">
+                        <label>Nome do Aluno</label>
+                        <input type="text" id="aluno-nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>RA do Aluno</label>
+                        <input type="text" id="aluno-ra" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha inicial</label>
+                        <input type="text" id="aluno-curso" required>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-view-project">Gerir Acesso</button>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+
+        <button id="btn-sair-master" class="profile-page__button button-danger hidden" style="max-width: 200px; margin: 20px auto;">Sair do Sistema</button>
+
+    </main>
+
+    <script type="module" src="./js/login-master.js"></script>
+  </body>
+</html>
