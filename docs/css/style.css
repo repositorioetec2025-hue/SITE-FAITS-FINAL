@@ -75,14 +75,27 @@ main {
 /* ==========================================================================
    3. CABEÇALHO (HEADER) 
    ========================================================================== */
-.cabeçalho {
+.cabeçalho,
+.cabeçalho-master {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  background-color: var(--cor-cabeçalho);
+  background-color: var(--cor-cabeçalho); /* Cor padrão */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* Regra Específica para o Master (Sobrescreve a cor) */
+.cabeçalho-master {
+  background-color: #13131a; 
+  border-bottom: 2px solid #D32027; 
+}
+
+.hidden {
+    display: none !important;
+}
+
 .cabeçalho__barra-topo {
   height: 3px;
   background-color: var(--cor-destaque);
@@ -838,7 +851,6 @@ br {
    6.2 Login-master
    ========================================================================== */
 
-
 .painel-controle-layout {
   display: flex;
   flex-direction: column;
@@ -847,45 +859,44 @@ br {
 }
 
 .painel-card {
-    background-color: #161b22;
-    border: 1px solid var(--cor-botao);
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background-color: #161b22;
+  border: 1px solid var(--cor-botao);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .painel-card .section-heading {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.4rem;
-    color: #e6edf3;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #30363d;
-    padding-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  color: #e6edf3;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #30363d;
+  padding-bottom: 15px;
 }
 
 .painel-card .section-heading i {
-    color: var(--cor-destaque); 
-    font-size: 1.6rem;
+  color: var(--cor-destaque);
+  font-size: 1.6rem;
 }
 
-
 .form-select {
-    width: 100%;
-    padding: 10px 12px;
-    background-color: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    color: #e6edf3;
-    font-family: var(--fonte-texto);
-    font-size: 1rem;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #e6edf3;
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .form-select:focus {
-    outline: none;
-    border-color: var(--cor-destaque);
+  outline: none;
+  border-color: var(--cor-destaque);
 }
 
 .btn-view-project {
@@ -906,7 +917,6 @@ br {
 .btn-view-project:hover {
   background-color: var(--cor-botao);
 }
-
 
 /* ==========================================================================
    7. MEDIA QUERIES 
@@ -1041,8 +1051,7 @@ br {
     color: #ffffff;
     border: 2px solid var(--cor-cabeçalho);
     font-family: var(--fonte-titulo);
-    margin-top: 20px;
-    margin-left: 80px;
+    margin: 10, 0;
     padding: 12px;
     margin-bottom: 30px;
     font-size: 1.2rem;
@@ -1052,7 +1061,9 @@ br {
   /* --- BARRA LATERAL (SIDEBAR) --- */
 
   .sidebar-repositorios {
-    display: block;
+    display: flex;
+    flex-direction: column; /* Empilha os itens verticalmente */
+    align-items: center;
     width: 25%;
     background-color: #c4c4c4;
     padding: 20px;
@@ -1327,11 +1338,485 @@ br {
 /* ==========================================================================
 Login master
 ========================================================================== */
-  .painel-controle-layout {
-    display: grid;
+.painel-controle-layout {
+  display: grid;
+  width: 100%;
+  height: 140%;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* =========================================================
+   DETALHES DO PROJETO — FORMULÁRIO ESTILIZADO (SEU MODELO)
+========================================================= */
+
+:root {
+  --cor-destaque: #b30000; /* Ajuste conforme seu tema */
+}
+
+/* HEADER */
+.detalhes-header {
+  background: var(--cor-destaque);
+  padding: 18px 24px;
+}
+.detalhes-voltar {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.detalhes-voltar:hover {
+  text-decoration: underline;
+}
+
+/* CARD PRINCIPAL */
+.detalhes-container {
+  max-width: 950px;
+  width: 90%;
+  margin: 40px auto;
+  padding: 35px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* TÍTULO */
+.detalhes-titulo {
+  font-size: 36px;
+  margin-bottom: 25px;
+  color: var(--cor-destaque);
+  font-weight: bold;
+  text-align: center;
+}
+
+/* SUBTÍTULOS */
+.detalhes-subtitulo {
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-size: 22px;
+  color: var(--cor-destaque);
+  font-weight: bold;
+}
+
+/* INPUTS / TEXTAREAS */
+.detalhes-input {
+  width: 100%;
+  padding: 14px;
+  font-size: 17px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  background: #f7f9fc;
+  transition: 0.25s;
+}
+.detalhes-input:focus {
+  border-color: var(--cor-destaque);
+  background: #fff;
+  outline: none;
+}
+
+/* BOTÕES */
+.detalhes-botoes {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.btn-excluir,
+.btn-salvar {
+  padding: 14px 22px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+  min-width: 150px;
+}
+
+/* Excluir */
+.btn-excluir {
+  background: #b30000;
+  color: white;
+}
+.btn-excluir:hover {
+  background: #8e0000;
+  transform: scale(1.04);
+}
+
+/* Salvar */
+.btn-salvar {
+  background: #1b5e20;
+  color: white;
+}
+.btn-salvar:hover {
+  background: #104c15;
+  transform: scale(1.04);
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 760px) {
+  .detalhes-container {
+    padding: 25px;
+    margin: 25px;
+  }
+
+  .detalhes-titulo {
+    font-size: 30px;
+  }
+
+  .detalhes-input {
+    font-size: 16px;
+  }
+
+  .btn-excluir,
+  .btn-salvar {
     width: 100%;
-    height: 140%;
-    grid-template-columns: 1fr 1fr; 
-    gap: 60px; 
-    align-items:center;
-    }
+  }
+}
+
+@media (max-width: 480px) {
+  .detalhes-container {
+    padding: 20px;
+    margin: 15px;
+  }
+
+  .detalhes-titulo {
+    font-size: 26px;
+  }
+}
+
+.filtros-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  padding: 10px 15px;
+  background: #f4f4f4;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.filtros-container label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.select-filtro {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.select-filtro:focus {
+  border-color: #0077ff;
+}
+
+.filtro-area {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.filtro-select {
+  min-width: 180px;
+  height: 38px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: var(--cor-destaque);
+  font-size: 1rem;
+  color: #ebebeb;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.filtro-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.5);
+  border-color: #ff0000;
+}
+
+.filtro-input {
+  height: 38px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  flex-grow: 1;
+  max-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .filtro-area {
+    justify-content: center;
+  }
+  .filtro-select,
+  .filtro-input {
+    width: 100%;
+    max-width: none;
+    margin-bottom: 10px;
+  }
+}
+
+/* --- ESTILOS DO LAYOUT E SIDEBAR --- */
+.sidebar-repositorios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding-top: 20px;
+}
+
+/* --- ESTILOS DA ÁREA DE FILTRO E ORDENAÇÃO --- */
+.filtro-area {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.filtro-select {
+  min-width: 180px;
+  height: 38px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: var(--cor-destaque);
+  font-size: 1rem;
+  color: #ebebeb;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.filtro-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.5);
+  border-color: #ff0000;
+}
+
+/* --- ESTILOS GERAIS DO MODAL (RESOLUÇÃO DO PROBLEMA DE COLAGEM) --- */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px; /* Afasta o modal do topo da tela */
+  overflow-y: auto;
+}
+
+#modal-projeto .modal-content {
+  padding: 30px;
+  max-width: 650px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+}
+
+#modal-projeto .modal-close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 1.5rem;
+  z-index: 1001;
+}
+
+/* --- ESTILOS DO CARD DE VISUALIZAÇÃO ('FICHA DE LEITURA') --- */
+.detalhes-titulo {
+  text-align: left;
+  color: #a00;
+  font-size: 1.8rem;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #a00;
+  margin-bottom: 25px;
+  font-weight: 700;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.form-group {
+  margin-bottom: 10px; /* Reduzido */
+  border-bottom: 1px dashed #eee;
+  padding-bottom: 8px; /* Reduzido */
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 2px; /* Reduzido */
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.input-fake {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.5;
+  margin-top: 0;
+  font-weight: 400;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.textarea-fake {
+  min-height: 50px;
+}
+
+.integrantes-subtitulo {
+  font-size: 1.2rem;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.separador-visual {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 10px 0;
+}
+
+.form-group:last-of-type {
+  border-bottom: none;
+}
+
+.botoes-integrante-simples {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.input-file-fake-visual {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 10px;
+}
+
+.btn-visual-arquivo {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.btn-visual-arquivo:hover {
+  background-color: #0056b3;
+}
+
+.input-fake.link-ativo a {
+  color: #007bff;
+  text-decoration: none;
+}
+.input-fake.link-ativo a:hover {
+  text-decoration: underline;
+}
+
+/* --- MEDIA QUERIES (RESPONSIVIDADE) --- */
+/* CARD DO ALUNO */
+.card-aluno {
+  background: #fff;
+  padding: 20px; /* padding geral */
+  padding-top: 40px; /* espaço extra para o botão X */
+  padding-right: 35px; /* espaço à direita para o botão */
+  border-radius: 12px;
+  border: 2px solid #000;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  position: relative; /* Para o botão ficar posicionado em relação ao card */
+  transition: 0.2s;
+  max-width: 300px; /* Largura máxima */
+  width: 100%; /* Responsivo */
+  box-sizing: border-box;
+}
+
+.card-aluno:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+/* BOTÃO X NO CANTO SUPERIOR DIREITO */
+.btn-excluir {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px; /* Quadrado proporcional */
+  height: 20px;
+  background: #c40000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+  border-radius: 20px; /* Apenas canto superior direito arredondado */
+
+  /* CENTRALIZAÇÃO DO X */
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  font-size: 16px;
+}
+
+.btn-excluir:hover {
+  background: #900000;
+}
+
+/* TEXTO DO CARD */
+.card-aluno h2 {
+  margin-top: 10px; /* Já tem padding-top no card */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-aluno p {
+  margin: 4px 0;
+  font-size: 15px;
+  word-wrap: break-word; /* Quebra linhas longas */
+}
+
+/* RESPONSIVO */
+@media (max-width: 400px) {
+  .card-aluno {
+    padding: 15px;
+    padding-top: 35px;
+    padding-right: 30px;
+  }
+
+  .btn-excluir {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+
+  .card-aluno h2 {
+    font-size: 16px;
+  }
+
+  .card-aluno p {
+    font-size: 14px;
+  }
+}

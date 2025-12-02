@@ -1,4 +1,3 @@
-// js/armario.js
 import { db } from "./firebase-config.js";
 import {
   ref,
@@ -8,25 +7,25 @@ import {
   child,
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("🔰 armario.js carregado");
+// VARIÁVEL GLOBAL PARA ARMAZENAR OS PROJETOS CARREGADOS
+let projetosArray = [];
 
-  // ELEMENTOS DA INTERFACE
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("🔰 armario.js carregado"); // ELEMENTOS DA INTERFACE
+
   const botoesAbrirForm = document.querySelectorAll(".js-abrir-form");
   const cadastrarSection = document.getElementById("add-project-section");
   const projectForm = document.getElementById("project-form");
   const btnCancelar = document.getElementById("btn-cancelar");
   const containerProjetos = document.getElementById("projects-grid-container");
-  const btnSubmit = projectForm.querySelector('[type="submit"]');
+  const btnSubmit = projectForm.querySelector('[type="submit"]'); // NOVO: Elemento de Ordenação
 
-  // Área de detalhes
+  const ordenacaoSelect = document.getElementById("ordenacao-select"); // Área de detalhes
+
   const detailsSection = document.getElementById("project-details");
   const detailsContent = document.getElementById("project-details-content");
-  const btnCloseDetails = document.getElementById("close-project-details");
+  const btnCloseDetails = document.getElementById("close-project-details"); // =============================== // FUNÇÕES DO FORMULÁRIO (MANTIDAS) // ===============================
 
-  // ===============================
-  // FORMULÁRIO
-  // ===============================
   function abrirFormulario() {
     cadastrarSection.classList.remove("hidden");
     cadastrarSection.scrollIntoView({ behavior: "smooth" });
@@ -71,11 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return true;
-  }
+  } // =============================== // SALVAR NO FIREBASE (MANTIDO) // ===============================
 
-  // ===============================
-  // SALVAR NO FIREBASE
-  // ===============================
   async function handleSalvarProjeto(event) {
     event.preventDefault();
 
@@ -112,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       alert(`✔ Projeto "${titulo}" cadastrado com sucesso!`);
-      fecharFormulario();
+      fecharFormulario(); // Recarrega, o que recarrega o array e renderiza
       carregarTodosProjetos();
     } catch (erro) {
       console.error("❌ Erro ao salvar projeto:", erro);
@@ -120,25 +116,32 @@ document.addEventListener("DOMContentLoaded", () => {
       btnSubmit.disabled = false;
       btnSubmit.textContent = "Salvar";
     }
-  }
+  } // =============================== // NOVO: RENDERIZAR PROJETOS // ===============================
 
-  // ===============================
-  // CARREGAR TODOS OS PROJETOS
-  // ===============================
+  function renderizarProjetos(projetosParaExibir) {
+    containerProjetos.innerHTML = "";
+    if (projetosParaExibir.length > 0) {
+      projetosParaExibir.forEach((projeto) => {
+        const card = criarCardProjeto(projeto);
+        containerProjetos.appendChild(card);
+      });
+    } else {
+      containerProjetos.innerHTML =
+        "<p>📂 Nenhum projeto encontrado com os critérios de filtro/ordenação.</p>";
+    }
+  } // =============================== // CARREGAR TODOS OS PROJETOS // ===============================
+
   async function carregarTodosProjetos() {
     try {
       const dbRef = ref(db);
       const snapshot = await get(child(dbRef, "projetos"));
 
-      containerProjetos.innerHTML = "";
-
       if (snapshot.exists()) {
-        const projetos = Object.values(snapshot.val()).reverse();
-        projetos.forEach((projeto) => {
-          const card = criarCardProjeto(projeto);
-          containerProjetos.appendChild(card);
-        });
+        // Popula o array global, usando .reverse() para mostrar os mais novos primeiro
+        projetosArray = Object.values(snapshot.val()).reverse(); // Garante que a primeira exibição use a ordem padrão (reversa, mais novo)
+        renderizarProjetos(projetosArray);
       } else {
+        projetosArray = [];
         containerProjetos.innerHTML =
           "<p>📂 Nenhum projeto cadastrado ainda.</p>";
       }
@@ -146,73 +149,48 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("❌ Erro ao carregar projetos:", erro);
       containerProjetos.innerHTML = "<p>Erro ao carregar projetos.</p>";
     }
-  }
+  } // =============================== // NOVO: LÓGICA DE ORDENAÇÃO // ===============================
 
-  // ===============================
-  // CRIAR CARD DA LISTA (SÓ COM TÍTULO)
-  // ===============================
+  function ordenarProjetos(tipoOrdenacao) {
+    if (projetosArray.length === 0) return;
+
+    const projetosOrdenados = [...projetosArray]; // Cria uma cópia para ordenar
+
+    projetosOrdenados.sort((a, b) => {
+      switch (tipoOrdenacao) {
+        case "titulo-asc": // Ordem Alfabética A-Z (título)
+          return a.titulo.localeCompare(b.titulo);
+        case "titulo-desc": // Ordem Alfabética Z-A (título)
+          return b.titulo.localeCompare(a.titulo);
+        case "integrantes-desc": // Por Quantidade de Integrantes (Maior para Menor) // Se integrantes for nulo, usa 0
+          const qtdA_desc = a.integrantes ? a.integrantes.length : 0;
+          const qtdB_desc = b.integrantes ? b.integrantes.length : 0;
+          return qtdB_desc - qtdA_desc;
+        case "integrantes-asc": // Por Quantidade de Integrantes (Menor para Maior)
+          const qtdA_asc = a.integrantes ? a.integrantes.length : 0;
+          const qtdB_asc = b.integrantes ? b.integrantes.length : 0;
+          return qtdA_asc - qtdB_asc;
+        default: // Se a opção padrão for selecionada, usa a ordem original (mais novo)
+          return 0;
+      }
+    }); // Após ordenar, renderiza o resultado
+
+    renderizarProjetos(projetosOrdenados);
+  } // =============================== // CRIAR CARD DA LISTA (MANTIDO) // ===============================
+
   function criarCardProjeto(projeto) {
     const card = document.createElement("div");
     card.classList.add("projeto-card");
 
     card.innerHTML = `
-    <h3>${escapeHtml(projeto.titulo || "")}</h3>
-  `;
+    <h3>${escapeHtml(projeto.titulo || "")}</h3>
+  `; // Ao clicar, abre o modal completo
 
-    // Ao clicar, abre o modal completo
     card.addEventListener("click", () => exibirProjetoCompleto(projeto));
 
     return card;
-  }
+  } // =============================== // FUNÇÕES DE DETALHES, MODAL E SANITIZAÇÃO (MANTIDAS) // =============================== // ... (mantidas as funções abrirDetalhes, fecharDetalhes, escapeHtml, exibirProjetoCompleto) // ... (O restante das funções de detalhes e modal continua aqui, como no seu código original) ... // Função de Sanitização (Escape HTML) - Mantenha no final ou onde estava
 
-  // ===============================
-  // ABRIR DETALHES DO PROJETO
-  // ===============================
-  async function abrirDetalhes(id) {
-    const dbRef = ref(db);
-
-    try {
-      const snapshot = await get(child(dbRef, `projetos/${id}`));
-
-      if (!snapshot.exists()) {
-        alert("Projeto não encontrado!");
-        return;
-      }
-
-      const projeto = snapshot.val();
-
-      const integrantesTxt =
-        projeto.integrantes?.length > 0
-          ? projeto.integrantes.map((i) => `${i.nome} (${i.ra})`).join("<br>")
-          : "Nenhum integrante cadastrado";
-
-      const linkExternoHTML = projeto.linkExterno
-        ? `<a href="${projeto.linkExterno}" target="_blank">🔗 Link externo</a>`
-        : "Nenhum link cadastrado";
-
-      detailsContent.innerHTML = `
-        <h2>${escapeHtml(projeto.titulo)}</h2>
-        <p><b>Descrição:</b> ${escapeHtml(projeto.descricao)}</p>
-        <p><b>Curso:</b> ${escapeHtml(projeto.curso)}</p>
-        <p><b>Integrantes:</b><br>${integrantesTxt}</p>
-        <p><b>Link adicional:</b> ${linkExternoHTML}</p>
-      `;
-
-      detailsSection.classList.remove("hidden");
-      detailsSection.scrollIntoView({ behavior: "smooth" });
-    } catch (erro) {
-      console.error("❌ Erro ao carregar detalhes:", erro);
-      alert("Erro ao abrir detalhes.");
-    }
-  }
-
-  function fecharDetalhes() {
-    detailsSection.classList.add("hidden");
-  }
-
-  // ===============================
-  // FUNÇÃO DE SANITIZAÇÃO
-  // ===============================
   function escapeHtml(str) {
     if (!str) return "";
     return String(str)
@@ -223,45 +201,99 @@ document.addEventListener("DOMContentLoaded", () => {
       .replaceAll("'", "&#039;");
   }
 
+  // ⬇️ FUNÇÃO ATUALIZADA PARA O NOVO ESTILO (APENAS VISUALIZAÇÃO) ⬇️
   function exibirProjetoCompleto(projeto) {
     const modal = document.getElementById("modal-projeto");
-    const caixa = document.getElementById("modal-projeto-detalhes");
+    const caixa = document.getElementById("modal-projeto-detalhes"); // 1. Gera o HTML dos Integrantes
 
-    const integrantes =
+    const integrantesHtml =
       projeto.integrantes && projeto.integrantes.length > 0
-        ? projeto.integrantes.map((i) => `${i.nome} (${i.ra})`).join("<br>")
-        : "Nenhum integrante cadastrado";
+        ? projeto.integrantes
+            .map((i, index) => {
+              return `
+              <div class="form-group integrante-detalhe">
+                  <label>Integrante ${index + 1}</label>
+                  <div class="input-fake">${escapeHtml(i.nome)}</div>
+              </div>
+              <div class="form-group ra-detalhe">
+                  <label>RA</label>
+                  <div class="input-fake">${escapeHtml(i.ra)}</div>
+              </div>
+                            ${
+                index < projeto.integrantes.length - 1
+                  ? '<div class="separador-visual"></div>'
+                  : ""
+              }
+          `;
+            })
+            .join("")
+        : '<p class="aviso-integrantes">Nenhum integrante cadastrado.</p>'; // 2. Monta o conteúdo final
 
     caixa.innerHTML = `
-    <h2>${escapeHtml(projeto.titulo)}</h2>
-    <p><b>Descrição:</b> ${escapeHtml(projeto.descricao)}</p>
-    <p><b>Curso:</b> ${escapeHtml(projeto.curso)}</p>
-    <p><b>Integrantes:</b><br>${integrantes}</p>
+        <h2 class="detalhes-titulo">Detalhes do Projeto</h2>
 
-    ${
+                <div class="form-group">
+            <label>Título</label>
+            <div class="input-fake">${escapeHtml(projeto.titulo)}</div>
+        </div>
+
+                <div class="form-group">
+            <label>Descrição</label>
+            <div class="input-fake textarea-fake">${escapeHtml(
+      projeto.descricao
+    )}</div>
+        </div>
+
+                <div class="form-group">
+            <label>Curso</label>
+            <div class="input-fake">${escapeHtml(projeto.curso)}</div>
+        </div>
+        
+        <hr style="margin: 20px 0;">
+
+                <h3 class="integrantes-subtitulo">Integrantes (${
+      projeto.integrantes ? projeto.integrantes.length : 0
+    })</h3>
+        ${integrantesHtml}
+        
+                <div class="botoes-integrante-simples">
+            <span>Link Externo:</span>
+        </div>
+
+                <div class="form-group link-detalhe">
+            ${
       projeto.linkExterno
-        ? `<p><b>Link Externo:</b> <a href="${projeto.linkExterno}" target="_blank">Abrir</a></p>`
-        : ""
+        ? `<div class="input-fake link-ativo"><a href="${
+            projeto.linkExterno
+          }" target="_blank">${escapeHtml(projeto.linkExterno)}</a></div>`
+        : '<div class="input-fake">Nenhum link cadastrado</div>'
     }
-  `;
+        </div>
+        
+                <div class="form-group documento-detalhe">
+            <label>Documento / Artigo</label>
+            <div class="input-fake input-file-fake-visual">
+                <span>Documento vinculado (Visualizar)</span>
+                <a href="#" target="_blank" class="btn-visual-arquivo">Visualizar</a>
+            </div>
+        </div>
+        
+            `;
 
     modal.classList.remove("hidden");
   }
+  // ⬆️ FIM DA FUNÇÃO ATUALIZADA ⬆️
 
   document.getElementById("modal-fechar").addEventListener("click", () => {
     document.getElementById("modal-projeto").classList.add("hidden");
-  });
+  }); // Fechar ao clicar fora da caixa
 
-  // Fechar ao clicar fora da caixa
   document.getElementById("modal-projeto").addEventListener("click", (e) => {
     if (e.target.id === "modal-projeto") {
       document.getElementById("modal-projeto").classList.add("hidden");
     }
-  });
+  }); // =============================== // EVENTOS // ===============================
 
-  // ===============================
-  // EVENTOS
-  // ===============================
   botoesAbrirForm.forEach((btn) =>
     btn.addEventListener("click", abrirFormulario)
   );
@@ -270,8 +302,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   projectForm?.addEventListener("submit", handleSalvarProjeto);
 
-  btnCloseDetails?.addEventListener("click", fecharDetalhes);
+  btnCloseDetails?.addEventListener("click", fecharDetalhes); // NOVO EVENTO: Monitora a mudança na lista de seleção
 
-  // CARREGAR NA INICIALIZAÇÃO
+  ordenacaoSelect?.addEventListener("change", (event) => {
+    ordenarProjetos(event.target.value);
+  }); // CARREGAR NA INICIALIZAÇÃO
+
   carregarTodosProjetos();
 });

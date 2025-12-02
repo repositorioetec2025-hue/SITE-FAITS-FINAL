@@ -1,56 +1,153 @@
+// =========================
+// 🔥 IMPORTAÇÕES
+// =========================
 import { db } from "./firebase-config.js";
 import {
   ref,
   get,
+  update,
+  remove,
   child,
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 
-// Pega ID da URL
+// =========================
+// 📌 PEGAR ID DA URL
+// =========================
 const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
+const projetoId = params.get("id");
 
-async function carregarDetalhes() {
-  if (!id) {
-    alert("ID do projeto não informado!");
-    return;
-  }
+if (!projetoId) {
+  alert("ID do projeto não encontrado!");
+  window.location.href = "config.html";
+}
 
-  const dbRef = ref(db);
-  const snapshot = await get(child(dbRef, `projetos/${id}`));
+// =========================
+// 📌 ELEMENTOS DO HTML
+// =========================
+const tituloInput = document.getElementById("edit-titulo");
+const descInput = document.getElementById("edit-descricao");
+const cursoInput = document.getElementById("edit-curso");
+const linkInput = document.getElementById("edit-link");
+const areaIntegrantes = document.getElementById("area-integrantes");
 
-  if (!snapshot.exists()) {
-    alert("Projeto não encontrado!");
-    return;
-  }
+const btnSalvar = document.getElementById("btn-salvar");
+const btnExcluir = document.getElementById("btn-excluir");
+const btnAddIntegrante = document.getElementById("btnAddIntegrante");
 
-  const projeto = snapshot.val();
-  console.log("Projeto carregado:", projeto);
+// =========================
+// 📌 CARREGAR DADOS DO FIREBASE
+// =========================
+async function carregarProjeto() {
+  try {
+    const snap = await get(child(ref(db), `projetos/${projetoId}`));
 
-  // Título
-  document.getElementById("titulo").innerText =
-    projeto.titulo ?? "(Sem título)";
+    if (!snap.exists()) {
+      alert("Projeto não encontrado!");
+      window.location.href = "config.html";
+      return;
+    }
 
-  // Curso
-  document.getElementById("curso").innerText =
-    "Curso: " + (projeto.curso ?? "Não informado");
+    const dados = snap.val();
 
-  // Descrição
-  document.getElementById("descricao").innerText =
-    projeto.descricao ?? "Sem descrição";
+    // Preencher os inputs
+    tituloInput.value = dados.titulo || "";
+    descInput.value = dados.descricao || "";
+    cursoInput.value = dados.curso || ""; // <-- AGORA 100% FUNCIONAL
+    linkInput.value = dados.link || "";
 
-  // Integrantes
-  const lista = document.getElementById("listaIntegrantes");
-  lista.innerHTML = ""; // limpar lista
+    // =============== INTEGRANTES ===============
+    areaIntegrantes.innerHTML = "";
+    const integrantes = dados.integrantes || {};
 
-  if (Array.isArray(projeto.integrantes)) {
-    projeto.integrantes.forEach((i) => {
-      const li = document.createElement("li");
-      li.innerText = `${i.nome} - RA ${i.ra}`;
-      lista.appendChild(li);
+    Object.keys(integrantes).forEach((key) => {
+      adicionarCampoIntegrante(integrantes[key].nome, integrantes[key].ra);
     });
-  } else {
-    lista.innerHTML = "<li>Nenhum integrante cadastrado.</li>";
+  } catch (e) {
+    console.error("Erro ao carregar detalhes:", e);
   }
 }
 
-carregarDetalhes();
+carregarProjeto();
+
+// =========================
+// 📌 ADICIONAR CAMPO DE INTEGRANTE
+// =========================
+function adicionarCampoIntegrante(nome = "", ra = "") {
+  const qtd = areaIntegrantes.children.length;
+
+  if (qtd >= 6) {
+    alert("Máximo de 6 integrantes!");
+    return;
+  }
+
+  const div = document.createElement("div");
+  div.className = "integrante-item";
+  div.style.marginBottom = "10px";
+
+  div.innerHTML = `
+    <input type="text" placeholder="Nome do integrante" class="detalhes-input integrante-nome" value="${nome}">
+    <input type="text" placeholder="RA" class="detalhes-input integrante-ra" value="${ra}">
+    <button type="button" class="btn-excluir-integrante" style="background:red;color:white;border:none;padding:6px 10px;border-radius:6px;cursor:pointer">X</button>
+  `;
+
+  div.querySelector(".btn-excluir-integrante").addEventListener("click", () => {
+    div.remove();
+  });
+
+  areaIntegrantes.appendChild(div);
+}
+
+btnAddIntegrante.addEventListener("click", () => {
+  adicionarCampoIntegrante();
+});
+
+// =========================
+// 📌 SALVAR ALTERAÇÕES
+// =========================
+btnSalvar.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const nomes = [...document.querySelectorAll(".integrante-nome")];
+  const ras = [...document.querySelectorAll(".integrante-ra")];
+
+  if (nomes.length < 2) {
+    alert("O projeto deve ter no mínimo 2 integrantes.");
+    return;
+  }
+
+  const integrantes = {};
+  nomes.forEach((el, i) => {
+    integrantes[i] = { nome: el.value, ra: ras[i].value };
+  });
+
+  try {
+    await update(ref(db, `projetos/${projetoId}`), {
+      titulo: tituloInput.value,
+      descricao: descInput.value,
+      curso: cursoInput.value, // <-- AGORA SALVA!
+      link: linkInput.value,
+      integrantes,
+    });
+
+    alert("Projeto atualizado!");
+  } catch (erro) {
+    console.error(erro);
+    alert("Erro ao salvar.");
+  }
+});
+
+// =========================
+// 📌 EXCLUIR PROJETO
+// =========================
+btnExcluir.addEventListener("click", async () => {
+  if (!confirm("Tem certeza que deseja excluir este projeto?")) return;
+
+  try {
+    await remove(ref(db, `projetos/${projetoId}`));
+    alert("Projeto excluído!");
+    window.location.href = "config.html";
+  } catch (erro) {
+    console.error(erro);
+    alert("Erro ao excluir.");
+  }
+});

@@ -2,14 +2,109 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalhes do Projeto</title>
-    <script type="module" src="detalhes-projeto.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
+
   <body>
-    <h1 id="titulo"></h1>
-    <p id="descricao"></p>
-    <p id="curso"></p>
-    <h3>Integrantes:</h3>
-    <ul id="listaIntegrantes"></ul>
+    <!-- =========================
+       🔙 VOLTAR
+  ========================== -->
+    <header class="detalhes-header">
+      <a href="config.html" class="detalhes-voltar">← Voltar</a>
+    </header>
+
+    <!-- =========================
+       📝 CONTAINER PRINCIPAL
+  ========================== -->
+    <main class="detalhes-container">
+      <h1 class="detalhes-titulo">Detalhes do Projeto</h1>
+
+      <form id="form-editar">
+        <!-- TÍTULO -->
+        <label class="detalhes-label">Título</label>
+        <input
+          type="text"
+          id="edit-titulo"
+          class="detalhes-input"
+          placeholder="Digite o título do projeto"
+        />
+
+        <!-- DESCRIÇÃO -->
+        <label class="detalhes-label">Descrição</label>
+        <textarea
+          id="edit-descricao"
+          class="detalhes-input"
+          rows="5"
+          placeholder="Descrição do projeto"
+        ></textarea>
+
+        <!-- CURSO EDITÁVEL -->
+        <label class="detalhes-label">Curso</label>
+        <input
+          type="text"
+          id="edit-curso"
+          class="detalhes-input"
+          placeholder="Curso do projeto"
+        />
+
+        <!-- INTEGRANTES -->
+        <label class="detalhes-label">Integrantes</label>
+
+        <div id="area-integrantes"></div>
+
+        <div class="integrantes-acoes">
+          <button
+            type="button"
+            id="btnAddIntegrante"
+            class="btn-adicionar"
+            style="
+              margin-top: 10px;
+              margin-bottom: 20px;
+              padding: 8px 14px;
+              border-radius: 8px;
+              background: #007bff;
+              color: white;
+              border: none;
+              cursor: pointer;
+              display: inline-block;
+            "
+          >
+            + Adicionar Integrante
+          </button>
+        </div>
+
+        <!-- LINK EXTERNO (AGORA EM LINHA NOVA) -->
+        <label class="detalhes-label">Link Externo</label>
+        <input
+          type="url"
+          id="edit-link"
+          class="detalhes-input"
+          placeholder="https://..."
+        />
+
+        <!-- DOCUMENTO -->
+        <label class="detalhes-label">Documento / Artigo (opcional)</label>
+        <input type="file" id="edit-arquivo" class="detalhes-input" />
+        <p class="detalhes-nota">
+          Nota: envio de arquivos exige configurar Storage — hoje só é visual.
+        </p>
+
+        <!-- BOTÕES -->
+        <div class="detalhes-botoes">
+          <button type="button" id="btn-excluir" class="btn-excluir">
+            Excluir
+          </button>
+
+          <button type="submit" id="btn-salvar" class="btn-salvar">
+            Salvar Alterações
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <script type="module" src="./js/detalhes-projeto.js"></script>
   </body>
 </html>
