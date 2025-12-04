@@ -1846,3 +1846,186 @@ Login master
 .card-professor {
   width: 260px;
 }
+/* =========================================================
+   ESTILOS DO CARD DE PROJETO (SIMPLIFICADO)
+   ========================================================= */
+
+.project-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: 0.2s;
+  cursor: pointer; /* 💡 Indica que o card inteiro é clicável */
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  /* Ajuste de margem se necessário, dependendo do layout projects-grid */
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Sombra um pouco mais forte no hover */
+}
+
+.project-card h3 {
+  margin-bottom: 8px;
+  color: var(
+    --cor-destaque
+  ); /* Usa a cor de destaque (vermelho) para o título */
+  font-family: var(--fonte-titulo);
+  font-size: 1.25rem;
+  border-bottom: 2px solid var(--cor-destaque);
+  padding-bottom: 5px;
+}
+
+.project-card p {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  color: #444;
+  font-family: var(--fonte-texto);
+}
+
+/* Opcional: Estilo específico para o nome do autor */
+.project-integrantes {
+  font-weight: 500;
+  color: var(--cor-primaria);
+}
+.modal {
+  position: fixed; /* Essencial para cobrir a tela */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* ... outros estilos de fundo ... */
+}
+/* =========================================================
+   ESTILOS GERAIS DO MODAL (FICHA TÉCNICA)
+   ========================================================= */
+
+/* Estilo para garantir que o modal cubra a tela */
+#modal-projeto {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  overflow-y: auto;
+}
+
+#modal-projeto .modal-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 95%;
+  max-width: 750px; /* Largura ideal para um formulário de ficha */
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Título Geral da Ficha */
+.detalhes-titulo-pagina {
+  font-family: var(--fonte-titulo);
+  font-size: 1.8rem;
+  color: var(--cor-destaque);
+  border-bottom: 2px solid var(--cor-destaque);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Campo de Visualização (Título, Curso, Descrição) */
+.detalhes-campo-visual,
+.detalhes-campo-integrante,
+.detalhes-iframe-box {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fcfcfc;
+}
+
+.detalhes-campo-visual label,
+.detalhes-iframe-box label,
+.detalhes-subtitulo {
+  display: block;
+  font-family: var(--fonte-texto);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+/* Estilo dos Inputs/Textareas (ReadOnly) */
+.detalhes-campo-visual input[type="text"],
+.detalhes-campo-visual textarea {
+  width: 100%;
+  border: none;
+  padding: 5px 0;
+  font-size: 1rem;
+  color: var(--cor-primaria);
+  background-color: transparent;
+  outline: none;
+  resize: none;
+}
+
+.detalhes-campo-visual textarea {
+  min-height: 50px;
+}
+
+/* Estilo do Campo de Integrante */
+.detalhes-campo-integrante input[type="text"] {
+  display: inline-block;
+  width: 90%;
+  padding: 5px 0;
+  border: none;
+  font-size: 1rem;
+  color: var(--cor-primaria);
+  background-color: transparent;
+  outline: none;
+}
+.icone-alerta-ra {
+  color: var(--cor-destaque);
+  font-size: 1.2rem;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+.botao-adicionar-integrante {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* Estilo para o IFRAME */
+.iframe-container-wrapper {
+  margin-top: 10px;
+  border: 1px solid #aaa;
+}
+
+.detalhes-iframe-box iframe {
+  display: block;
+}
+
+/* Link original */
+.detalhes-campo-visual .link-documento {
+  color: #007bff;
+  text-decoration: none;
+  word-break: break-all;
+}
+.detalhes-campo-visual .link-documento:hover {
+  text-decoration: underline;
+}
