@@ -1,7 +1,7 @@
 // =========================
 // 🔥 IMPORTAÇÕES DO FIREBASE
 // =========================
-import { db } from "./firebase-config.js";
+import { db, auth } from "./firebase-config.js";
 import {
   ref,
   set,
@@ -9,6 +9,8 @@ import {
   child,
   remove,
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
 // =========================
 // 🔐 HASH SHA-256
@@ -27,7 +29,7 @@ async function compararSenha(senhaDigitada, senhaHash) {
 }
 
 // =========================
-// 🌐 ELEMENTOS (safely)
+// 🌐 ELEMENTOS
 // =========================
 const loginSection = document.getElementById("loginSection");
 const profileSection = document.getElementById("profileSection");
@@ -96,15 +98,13 @@ if (profileForm) {
     try {
       const dbRef = ref(db);
 
-      // verifica RA na coleção correspondente
       const raSnapshot = await get(child(dbRef, `${tipoNovoUser}/${ra}`));
 
-      if (raSnapshot.exists()) {
+      if (raSnapshot.exists() && tipoNovoUser !== "professores") {
         alert("Esse RA já está cadastrado!");
         return;
       }
 
-      // cria com hash
       const senhaHash = await hashSenha(senha);
 
       await set(ref(db, `${tipoNovoUser}/${ra}`), {
@@ -128,14 +128,13 @@ if (profileForm) {
 }
 
 // =========================
-// 🔑 LOGIN (aluno / professor / admin)
+// 🔑 LOGIN
 // =========================
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const tipoLoginSelect = document.getElementById("login-tipo");
-    const tipoLogin = tipoLoginSelect ? tipoLoginSelect.value : "alunos";
+    const tipoLogin = document.getElementById("login-tipo")?.value || "alunos";
     const ra = document.getElementById("login-ra")?.value.trim() || "";
     const senha = document.getElementById("password")?.value.trim() || "";
     const lembrar = lembrarLoginCheckbox?.checked;
@@ -147,6 +146,65 @@ if (loginForm) {
 
     try {
       const dbRef = ref(db);
+
+      // ======== PROFESSOR LOGIN POR RA ========
+      if (tipoLogin === "professores") {
+        const professoresSnapshot = await get(child(dbRef, "professores"));
+        if (!professoresSnapshot.exists()) {
+          alert("Professor não encontrado!");
+          return;
+        }
+
+        let professorEncontrado = null;
+
+        professoresSnapshot.forEach((prof) => {
+          if (prof.val().ra == ra) {
+            professorEncontrado = prof.val();
+          }
+        });
+
+        if (!professorEncontrado) {
+          alert("RA de professor não encontrado!");
+          return;
+        }
+
+        try {
+          await signInWithEmailAndPassword(
+            auth,
+            professorEncontrado.email,
+            senha
+          );
+
+          if (lembrar) {
+            localStorage.setItem(
+              "usuarioLogado",
+              JSON.stringify({
+                tipo: tipoLogin,
+                ra: professorEncontrado.ra,
+                username: professorEncontrado.nome,
+                email: professorEncontrado.email,
+                curso: "Professor",
+              })
+            );
+          }
+
+          mostrarPerfil(
+            {
+              ra: professorEncontrado.ra,
+              username: professorEncontrado.nome,
+              email: professorEncontrado.email,
+              curso: "Professor",
+            },
+            tipoLogin
+          );
+          return;
+        } catch (error) {
+          alert("Senha incorreta ou professor não concluiu redefinição!");
+          return;
+        }
+      }
+
+      // ===== ADMIN OU ALUNO (LÓGICA MANTIDA) =====
       const snapshot = await get(child(dbRef, `${tipoLogin}/${ra}`));
 
       if (!snapshot.exists()) {
@@ -155,14 +213,16 @@ if (loginForm) {
       }
 
       const dados = snapshot.val();
-      const senhaCorreta = await compararSenha(senha, dados.senhaHash);
+
+      const senhaCorreta =
+        tipoLogin === "alunos"
+          ? await compararSenha(senha, dados.senhaHash)
+          : senha === dados.senha; // ADMIN
 
       if (!senhaCorreta) {
         alert("Senha incorreta!");
         return;
       }
-
-      localStorage.setItem("raLogado", dados.ra);
 
       if (lembrar) {
         localStorage.setItem(
@@ -193,27 +253,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   const usuarioLogado = usuarioSalvoRaw ? JSON.parse(usuarioSalvoRaw) : null;
 
   if (usuarioLogado) {
-    if (usuarioLogado.tipo === "admin") {
-      mostrarPerfil(
-        {
-          username: "Administrador",
-          email: "—",
-          ra: usuarioLogado.ra,
-          curso: "—",
-        },
-        "admin"
-      );
-      return;
-    }
-
     try {
       const dbRef = ref(db);
       const snapshot = await get(
         child(dbRef, `${usuarioLogado.tipo}/${usuarioLogado.ra}`)
       );
 
-      if (snapshot.exists()) {
-        mostrarPerfil(snapshot.val(), usuarioLogado.tipo);
+      if (snapshot.exists() || usuarioLogado.tipo === "professores") {
+        mostrarPerfil(
+          snapshot.exists() ? snapshot.val() : usuarioLogado,
+          usuarioLogado.tipo
+        );
       } else {
         localStorage.removeItem("usuarioLogado");
       }
@@ -244,7 +294,6 @@ function mostrarPerfil(dados, tipo = "alunos") {
 if (logoutButton) {
   logoutButton.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogado");
-    localStorage.removeItem("raLogado");
 
     if (editProfileSection) editProfileSection.style.display = "none";
     if (loginSection) loginSection.style.display = "block";
@@ -289,15 +338,23 @@ if (deleteButton) {
 }
 
 // =========================
-// 👁️ MOSTRAR / OCULTAR SENHA
+// 👁️ MOSTRAR / OCULTAR SENHA (OLHO ABERTO/FECHADO)
 // =========================
 document.querySelectorAll(".toggle-senha").forEach((btn) => {
   btn.addEventListener("click", () => {
     const targetId = btn.getAttribute("data-target");
     const input = document.getElementById(targetId);
     if (!input) return;
-    input.type = input.type === "password" ? "text" : "password";
-    btn.classList.toggle("bx-show");
-    btn.classList.toggle("bx-hide");
+
+    // Se a senha estiver sendo mostrada
+    if (input.type === "text") {
+      input.type = "password"; // esconde a senha
+      btn.classList.remove("bx-show"); // remove olho aberto
+      btn.classList.add("bx-hide"); // coloca olho fechado
+    } else {
+      input.type = "text"; // mostra a senha
+      btn.classList.remove("bx-hide"); // remove olho fechado
+      btn.classList.add("bx-show"); // coloca olho aberto
+    }
   });
 });

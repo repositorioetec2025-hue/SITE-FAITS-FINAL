@@ -36,6 +36,7 @@
             <input
               class="profile-page__input"
               type="text"
+              placeholder="informe o seu RA"
               id="login-ra"
               required
             />
@@ -44,14 +45,31 @@
           <br />
 
           <label class="profile-page__label">Senha:</label>
-          <div class="profile-page__field-group">
+
+          <!-- GRUPO DE SENHA with toggle -->
+          <div class="profile-page__field-group" style="position: relative">
             <i class="bx bx-lock-alt"></i>
+
             <input
               class="profile-page__input"
               type="password"
+              placeholder="informe a sua Senha"
               id="login-senha"
               required
             />
+
+            <!-- Botão 👁️ toggle (funciona com seu JS atual) -->
+            <i
+              class="bx bx-hide toggle-senha"
+              data-target="login-senha"
+              style="
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+              "
+            ></i>
           </div>
 
           <br />

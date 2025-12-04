@@ -3,17 +3,20 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  deleteUser,
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
 import {
   getDatabase,
   ref,
   set,
+  remove,
+  onValue,
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 
 import { app } from "./firebase-config.js";
 
-// Inicializações
+// ===== Inicializações =====
 const auth = getAuth(app);
 const db = getDatabase(app);
 
@@ -22,6 +25,7 @@ const botoesAbrir = document.querySelectorAll(".js-abrir-form");
 const btnCancelar = document.getElementById("btn-cancelar");
 const formSection = document.getElementById("add-professor-section");
 const formCadastro = document.getElementById("professor-form");
+const professoresGrid = document.getElementById("professores-grid");
 
 // ===== Mostrar / Ocultar Formulário =====
 botoesAbrir.forEach((botao) => {
@@ -50,6 +54,7 @@ formCadastro.addEventListener("submit", async (e) => {
   try {
     const senhaTemporaria = Math.random().toString(36).slice(-10);
 
+    // Cria no Firebase Auth
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -58,6 +63,7 @@ formCadastro.addEventListener("submit", async (e) => {
 
     const uid = userCredential.user.uid;
 
+    // Salva no Realtime Database
     await set(ref(db, "professores/" + uid), {
       nome,
       email,
@@ -68,7 +74,7 @@ formCadastro.addEventListener("submit", async (e) => {
     await sendPasswordResetEmail(auth, email);
 
     alert(
-      "Professor cadastrado com sucesso!\nUm email foi enviado para redefinir a senha."
+      "Professor cadastrado com sucesso!\nUm email foi enviado para ele criar a senha."
     );
 
     formCadastro.reset();
@@ -78,3 +84,56 @@ formCadastro.addEventListener("submit", async (e) => {
     alert("Erro ao cadastrar professor: " + error.message);
   }
 });
+
+// ===== EXCLUIR PROFESSOR =====
+async function excluirProfessor(uid, email) {
+  if (!confirm(`Deseja excluir o professor:\n${email} ?`)) return;
+
+  try {
+    // Remove do banco
+    await remove(ref(db, "professores/" + uid));
+
+    // Opcional — TENTAR remover do Auth
+    const userToDelete = await auth.getUser?.(uid);
+    if (userToDelete) await deleteUser(userToDelete);
+
+    alert("Professor excluído!");
+  } catch (error) {
+    console.error("Erro ao excluir:", error);
+    alert("Erro ao excluir professor (usuário ainda pode existir no Auth).");
+  }
+}
+
+// ===== LISTAR PROFESSORES =====
+const professoresRef = ref(db, "professores/");
+
+onValue(professoresRef, (snapshot) => {
+  professoresGrid.innerHTML = "";
+
+  if (!snapshot.exists()) {
+    professoresGrid.innerHTML = `<p style="opacity:.6;">Nenhum professor cadastrado.</p>`;
+    return;
+  }
+
+  snapshot.forEach((childSnapshot) => {
+    const prof = childSnapshot.val();
+
+    const card = document.createElement("div");
+    card.classList.add("card-professor");
+
+    card.innerHTML = `
+      <button class="btn-excluir" title="Excluir" data-uid="${prof.uid}" data-email="${prof.email}">X</button>
+      <h2>${prof.nome}</h2>
+      <p><strong>Email:</strong> ${prof.email}</p>
+      <p><strong>RA:</strong> ${prof.ra}</p>
+    `;
+
+    // Clique excluir
+    card.querySelector(".btn-excluir").addEventListener("click", () => {
+      excluirProfessor(prof.uid, prof.email);
+    });
+
+    professoresGrid.appendChild(card);
+  });
+});
+

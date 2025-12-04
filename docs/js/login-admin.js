@@ -12,50 +12,73 @@ import {
 // =========================
 const form = document.getElementById("loginMasterForm");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const ra = document.getElementById("login-ra").value.trim();
-  const senha = document.getElementById("login-senha").value.trim();
+    const ra = document.getElementById("login-ra").value.trim();
+    const senha = document.getElementById("login-senha").value.trim();
 
-  if (!ra || !senha) {
-    alert("Preencha todos os campos!");
-    return;
-  }
-
-  try {
-    // 🔎 Busca no caminho correto do Realtime Database
-    const adminRef = ref(db, `admin/${ra}`);
-    const snapshot = await get(adminRef);
-
-    if (!snapshot.exists()) {
-      alert("RA não encontrado!");
+    if (!ra || !senha) {
+      alert("Preencha todos os campos!");
       return;
     }
 
-    const dados = snapshot.val();
+    try {
+      // 🔎 Busca o administrador pelo RA
+      const adminRef = ref(db, `admin/${ra}`);
+      const snapshot = await get(adminRef);
 
-    if (dados.senha !== senha) {
-      alert("Senha incorreta!");
-      return;
+      if (!snapshot.exists()) {
+        alert("RA de administrador não encontrado!");
+        return;
+      }
+
+      const dados = snapshot.val();
+
+      // Verificação simples da senha (admin não usa hash)
+      if (dados.senha !== senha) {
+        alert("Senha incorreta!");
+        return;
+      }
+
+      // ==============================
+      // 🔥 LOGIN DO ADMINISTRADOR
+      // ==============================
+      localStorage.setItem(
+        "usuarioLogado",
+        JSON.stringify({
+          tipo: "admin",
+          ra: ra,
+          username: dados.Usuario || "Administrador",
+          email: dados.email || "",
+        })
+      );
+
+      alert("Login realizado com sucesso!");
+      window.location.href = "perfil.html";
+    } catch (error) {
+      console.error("Erro ao acessar o banco:", error);
+      alert("Erro ao acessar o banco de dados. Veja o console.");
     }
+  });
+}
 
-    // ==============================
-    // 🔥 LOGIN DO ADMINISTRADOR
-    // ==============================
-    localStorage.setItem(
-      "usuarioLogado",
-      JSON.stringify({
-        ra: ra,
-        tipo: "admin",
-        nome: dados.nome || "Administrador",
-      })
-    );
+// =========================
+// 👁️ MOSTRAR / OCULTAR SENHA
+// =========================
+document.querySelectorAll(".toggle-senha").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const targetId = btn.getAttribute("data-target");
+    const input = document.getElementById(targetId);
+    if (!input) return;
 
-    alert("Login realizado com sucesso!");
-    window.location.href = "perfil.html";
-  } catch (error) {
-    console.error("Erro ao acessar o banco:", error);
-    alert("Erro ao acessar o banco de dados. Veja o console.");
-  }
+    const isShowing = input.type === "text";
+
+    input.type = isShowing ? "password" : "text";
+
+    // Alterna ícones bx-show / bx-hide
+    btn.classList.toggle("bx-show", !isShowing);
+    btn.classList.toggle("bx-hide", isShowing);
+  });
 });

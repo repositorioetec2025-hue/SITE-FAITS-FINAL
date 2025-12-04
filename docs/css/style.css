@@ -88,12 +88,12 @@ main {
 
 /* Regra Específica para o Master (Sobrescreve a cor) */
 .cabeçalho-master {
-  background-color: #13131a; 
-  border-bottom: 2px solid #D32027; 
+  background-color: #13131a;
+  border-bottom: 2px solid #d32027;
 }
 
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
 .cabeçalho__barra-topo {
@@ -1737,34 +1737,35 @@ Login master
   text-decoration: underline;
 }
 
-/* --- MEDIA QUERIES (RESPONSIVIDADE) --- */
-/* CARD DO ALUNO */
-.card-aluno {
+/* CARD BASE – usado tanto por aluno quanto professor */
+.card-aluno,
+.card-professor {
   background: #fff;
-  padding: 20px; /* padding geral */
-  padding-top: 40px; /* espaço extra para o botão X */
-  padding-right: 35px; /* espaço à direita para o botão */
+  padding: 20px;
+  padding-top: 40px;
+  padding-right: 35px;
   border-radius: 12px;
   border: 2px solid #000;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-  position: relative; /* Para o botão ficar posicionado em relação ao card */
+  position: relative;
   transition: 0.2s;
-  max-width: 300px; /* Largura máxima */
-  width: 100%; /* Responsivo */
+  max-width: 300px;
+  width: 100%;
   box-sizing: border-box;
 }
 
-.card-aluno:hover {
+.card-aluno:hover,
+.card-professor:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
 }
 
-/* BOTÃO X NO CANTO SUPERIOR DIREITO */
+/* BOTÃO EXCLUIR (X) */
 .btn-excluir {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 20px; /* Quadrado proporcional */
+  width: 20px;
   height: 20px;
   background: #c40000;
   color: #fff;
@@ -1772,12 +1773,10 @@ Login master
   cursor: pointer;
   font-weight: bold;
   transition: 0.2s;
-  border-radius: 20px; /* Apenas canto superior direito arredondado */
-
-  /* CENTRALIZAÇÃO DO X */
+  border-radius: 20px;
   display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center; /* Centraliza verticalmente */
+  justify-content: center;
+  align-items: center;
   font-size: 16px;
 }
 
@@ -1785,22 +1784,25 @@ Login master
   background: #900000;
 }
 
-/* TEXTO DO CARD */
-.card-aluno h2 {
-  margin-top: 10px; /* Já tem padding-top no card */
+/* TEXTOS */
+.card-aluno h2,
+.card-professor h2 {
+  margin-top: 10px;
   font-size: 18px;
   font-weight: bold;
 }
 
-.card-aluno p {
+.card-aluno p,
+.card-professor p {
   margin: 4px 0;
   font-size: 15px;
-  word-wrap: break-word; /* Quebra linhas longas */
+  word-wrap: break-word;
 }
 
 /* RESPONSIVO */
 @media (max-width: 400px) {
-  .card-aluno {
+  .card-aluno,
+  .card-professor {
     padding: 15px;
     padding-top: 35px;
     padding-right: 30px;
@@ -1812,11 +1814,35 @@ Login master
     font-size: 14px;
   }
 
-  .card-aluno h2 {
+  .card-aluno h2,
+  .card-professor h2 {
     font-size: 16px;
   }
 
-  .card-aluno p {
+  .card-aluno p,
+  .card-professor p {
     font-size: 14px;
   }
+}
+
+/* GRID DOS CARDS DE ALUNOS */
+.alunos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  padding: 25px;
+  width: 100%;
+  box-sizing: border-box;
+  justify-items: center;
+}
+
+.professores-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.card-professor {
+  width: 260px;
 }
