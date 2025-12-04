@@ -9,21 +9,14 @@
   </head>
 
   <body>
-    <!-- =========================
-       🔙 VOLTAR
-  ========================== -->
     <header class="detalhes-header">
       <a href="config.html" class="detalhes-voltar">← Voltar</a>
     </header>
 
-    <!-- =========================
-       📝 CONTAINER PRINCIPAL
-  ========================== -->
     <main class="detalhes-container">
       <h1 class="detalhes-titulo">Detalhes do Projeto</h1>
 
       <form id="form-editar">
-        <!-- TÍTULO -->
         <label class="detalhes-label">Título</label>
         <input
           type="text"
@@ -32,7 +25,6 @@
           placeholder="Digite o título do projeto"
         />
 
-        <!-- DESCRIÇÃO -->
         <label class="detalhes-label">Descrição</label>
         <textarea
           id="edit-descricao"
@@ -41,16 +33,15 @@
           placeholder="Descrição do projeto"
         ></textarea>
 
-        <!-- CURSO EDITÁVEL -->
         <label class="detalhes-label">Curso</label>
         <input
           type="text"
           id="edit-curso"
           class="detalhes-input"
+          class="detalhes-input"
           placeholder="Curso do projeto"
         />
 
-        <!-- INTEGRANTES -->
         <label class="detalhes-label">Integrantes</label>
 
         <div id="area-integrantes"></div>
@@ -76,24 +67,19 @@
           </button>
         </div>
 
-        <!-- LINK EXTERNO (AGORA EM LINHA NOVA) -->
-        <label class="detalhes-label">Link Externo</label>
+        <label class="detalhes-label"
+          >Link do Documento (URL de Incorporação)</label
+        >
         <input
           type="url"
           id="edit-link"
           class="detalhes-input"
-          placeholder="https://..."
+          placeholder="Cole o link de Incorporação (embed) do Drive/OneDrive"
         />
 
-        <!-- DOCUMENTO -->
-        <label class="detalhes-label">Documento / Artigo (opcional)</label>
-        <input type="file" id="edit-arquivo" class="detalhes-input" />
-        <p class="detalhes-nota">
-          Nota: envio de arquivos exige configurar Storage — hoje só é visual.
-        </p>
+        <div id="visualizador-embed" style="margin-top: 15px"></div>
 
-        <!-- BOTÕES -->
-        <div class="detalhes-botoes">
+        <div class="detalhes-botoes" style="margin-top: 25px">
           <button type="button" id="btn-excluir" class="btn-excluir">
             Excluir
           </button>
